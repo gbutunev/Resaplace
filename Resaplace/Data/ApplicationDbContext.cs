@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Resaplace.Data.Models;
 
 namespace Resaplace.Data
 {
@@ -15,5 +16,8 @@ namespace Resaplace.Data
         {
             base.OnModelCreating(builder);
         }
+
+        public DbSet<RestaurantApplication> RestaurantApplications { get; set; }
+        public DbSet<Image> Images { get; set; }
     }
 }

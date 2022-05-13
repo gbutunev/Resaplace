@@ -1,3 +1,4 @@
+using Blazored.Toast;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.Web;
@@ -6,6 +7,7 @@ using Microsoft.AspNetCore.Identity.UI;
 using Microsoft.EntityFrameworkCore;
 using Resaplace.Areas.Identity;
 using Resaplace.Data;
+using Resaplace.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,8 +20,19 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.Requ
     .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddRazorPages();
+    //חא ונמנט
+    //.AddMvcOptions(options =>
+    //{
+    //    options.MaxModelValidationErrors = 50;
+    //    options.ModelBindingMessageProvider.SetValueMustBeANumberAccessor(
+    //        _ => "אסהכךפ;יאסהכךפי");
+    //});
 builder.Services.AddServerSideBlazor();
 builder.Services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<IdentityUser>>();
+
+builder.Services.AddBlazoredToast();
+
+builder.Services.AddScoped<RestaurantApplicationsService>();
 
 var app = builder.Build();
 

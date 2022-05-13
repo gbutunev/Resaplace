@@ -1,0 +1,32 @@
+﻿@page "/newrestaurant"
+@attribute [Authorize]
+
+<h3>Създаване на заявка за нов ресторант</h3>
+
+<EditForm Model="@Model" OnValidSubmit="@SubmitData">
+    <DataAnnotationsValidator />
+    <label for="r-name">Наименование</label>
+    <InputText @bind-Value="Model.Name" id="r-name" /><br />
+    <label for="r-desc">Описание</label>
+    <InputText @bind-Value="Model.Description" id="r-desc" /><br />
+    <label for="r-country">Държава</label>
+    <InputText @bind-Value="Model.Country" id="r-country" /><br />
+    <label for="r-city">Град</label>
+    <InputText @bind-Value="Model.City" id="r-city" /><br />
+    <label for="r-address">Адрес</label>
+    <InputText @bind-Value="Model.StreetAddress" id="r-address" /><br />
+    <label for="r-phone">Телефонен номер за връзка</label>
+    <InputText @bind-Value="Model.PhoneNumber" id="r-phone"/><br />
+    <label for="r-tables">Брой маси</label>
+    <InputNumber @bind-Value="Model.TotalTables" id="r-tables" /><br />
+    <label for="r-seats">Общ брой места</label>
+    <InputNumber @bind-Value="Model.TotalSeats" id="r-seats" /><br />
+    <label for="r-pictures">Снимки (3 броя, до 5MB всяка)</label>
+    @if (BoolClearInputFile)
+    {
+        <InputFile OnChange="@LoadFiles" multiple id="r-pictures" />
+    }
+    <br />
+    <button type="submit">Изпращане</button>
+    <ValidationSummary />
+</EditForm>
