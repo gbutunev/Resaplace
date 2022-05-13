@@ -19,5 +19,7 @@ namespace Resaplace.Data
 
         public DbSet<RestaurantApplication> RestaurantApplications { get; set; }
         public DbSet<Image> Images { get; set; }
+        public DbSet<Restaurant> Restaurants { get; set; }
+        public DbSet<Dish> Dishes { get; set; }
     }
 }
