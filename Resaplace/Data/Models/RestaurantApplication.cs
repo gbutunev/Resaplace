@@ -40,6 +40,7 @@ namespace Resaplace.Data.Models
             StreetAddress = model.StreetAddress;
             TotalSeats = model.TotalSeats;
             TotalTables = model.TotalTables;
+            PhoneNumber = model.PhoneNumber;
             ApplicationStatus = status;
         }
     }
