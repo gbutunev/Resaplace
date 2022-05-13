@@ -59,5 +59,21 @@ namespace Resaplace.Services
             await dbContext.SaveChangesAsync();
             return true;
         }
+
+        public async Task<bool> ChangeRestaurantApplicationStatusAsync(int id, BasicStatus status)
+        {
+            var application = await dbContext.RestaurantApplications.FirstOrDefaultAsync(x => x.Id == id);
+            application.ApplicationStatus = status;
+            await dbContext.SaveChangesAsync();
+            return true;
+        }
+
+        public async Task<bool> SetFeedbackMessageAsync(int id, string message)
+        {
+            var application = await dbContext.RestaurantApplications.FirstOrDefaultAsync(x => x.Id == id);
+            application.FeedbackMessage = message;
+            await dbContext.SaveChangesAsync();
+            return true;
+        }
     }
 }

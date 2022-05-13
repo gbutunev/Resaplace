@@ -27,6 +27,7 @@ namespace Resaplace.Data.Models
         public string PhoneNumber { get; set; }
         public List<Image> Images { get; set; }
         public BasicStatus ApplicationStatus { get; set; }
+        public string FeedbackMessage { get; set; }
 
         public RestaurantApplication() { }
         public RestaurantApplication(FormRestaurantApplication model, IdentityUser idUser, List<Image> images, BasicStatus status)

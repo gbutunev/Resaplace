@@ -5,9 +5,6 @@ namespace Resaplace.Pages.Admin
 {
     public partial class RestaurantApplicationComponent : ComponentBase
     {
-        [Inject]
-        private IWebHostEnvironment Env { get; set; }
-
         [Parameter]
         public RestaurantApplication RestaurantApplication { get; set; }
 

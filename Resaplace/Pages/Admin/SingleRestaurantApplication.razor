@@ -1,0 +1,114 @@
+﻿@page "/restaurantapplications/{Id:int}"
+@attribute [Authorize]
+
+<h3>Детайли</h3>
+@if (CurrentApplication == null)
+{
+    <p>@InitialMessage</p>
+}
+else
+{
+    <h4>Ресторант @CurrentApplication.Name</h4>
+
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+        @foreach (var img in CurrentApplication.Images)
+        {
+            <div class="col">
+                <img class="m-4" style="height: 200px" src="/images/@img.ImagePath" alt="@img.AltText" />
+            </div>
+        }
+    </div>
+
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+        <div class="col">
+            <div class="card" style="width: 18rem;">
+                <div class="card-header">
+                    Основна информация
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title">@CurrentApplication.Name</h5>
+                    <h6 class="card-title">Описание</h6>
+                    <p class="card-text">@CurrentApplication.Description</p>
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">Брой маси: @CurrentApplication.TotalTables</li>
+                    <li class="list-group-item">Брой места: @CurrentApplication.TotalSeats</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="col">
+            <div class="card" style="width: 18rem;">
+                <div class="card-header">
+                    Локация
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">@CurrentApplication.Country</li>
+                    <li class="list-group-item">@CurrentApplication.City</li>
+                    <li class="list-group-item">@CurrentApplication.StreetAddress</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="col">
+            <div class="card" style="width: 18rem;">
+                <div class="card-header">
+                    Собственик
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">@CurrentApplication.Owner.Email</li>
+                    <li class="list-group-item">Ресторант: @CurrentApplication.PhoneNumber</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="d-grid gap-2 col-6 mx-auto">
+        <button type="button" class="btn btn-success" @onclick="@ApproveRestaurantButtonClick">Одобряване на заявката</button>
+        <button type="button" class="btn btn-danger" @onclick="@DenyRestaurantButtonClick">Отказване на заявката</button>
+    </div>
+
+    @if (ShowAcceptPopup)
+    {
+        <div class="modal" tabindex="-1" role="dialog" style="display: block">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Одобряване на ресторант @CurrentApplication.Name</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" @onclick="@CancelApproval"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Сигурни ли сте, че искате да одобрите създаването на ресторант @CurrentApplication.Name в Resaplace?</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" @onclick="@CancelApproval">Не</button>
+                        <button type="button" class="btn btn-success" @onclick="@AcceptApproval">Да</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+
+    @if (ShowDeclinePopup)
+    {
+        <div class="modal" tabindex="-1" role="dialog" style="display: block">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Отказ на ресторант @CurrentApplication.Name</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" @onclick="@CancelDenial"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Моля, въведете причината за отказа, за да бъде записана в заявката @CurrentApplication.Name:</p>
+                        <input type="text" placeholder="Причина за отказ" @bind="@FeedbackMessage">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" @onclick="@CancelDenial">Не</button>
+                        <button type="button" class="btn btn-success" @onclick="@AcceptDenial">Да</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+}
