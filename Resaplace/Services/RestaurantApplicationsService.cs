@@ -16,22 +16,41 @@ namespace Resaplace.Services
 
         public async Task<List<RestaurantApplication>> GetAllRestaurantApplicationsAsync()
         {
-            return await dbContext.RestaurantApplications.ToListAsync();
+            return await dbContext
+                .RestaurantApplications
+                .Include(x => x.Owner)
+                .Include(x => x.Images)
+                .ToListAsync();
         }
 
         public async Task<RestaurantApplication> GetRestaurantApplicationByIdAsync(int id)
         {
-            return await dbContext.RestaurantApplications.Where(a => a.Id == id).FirstOrDefaultAsync();
+            return await dbContext
+                .RestaurantApplications
+                .Where(a => a.Id == id)
+                .Include(x => x.Owner)
+                .Include(x => x.Images)
+                .FirstOrDefaultAsync();
         }
 
         public async Task<List<RestaurantApplication>> GetRestaurantApplicationsByOwnerIdAsync(string id)
         {
-            return await dbContext.RestaurantApplications.Where(x => x.Owner.Id == id).ToListAsync();
+            return await dbContext
+                .RestaurantApplications
+                .Where(x => x.Owner.Id == id)
+                .Include(x => x.Owner)
+                .Include(x => x.Images)
+                .ToListAsync();
         }
 
         public async Task<List<RestaurantApplication>> GetRestaurantApplicationsByOwnerAsync(IdentityUser owner)
         {
-            return await dbContext.RestaurantApplications.Where(x => x.Owner == owner).ToListAsync();
+            return await dbContext
+                .RestaurantApplications
+                .Where(x => x.Owner == owner)
+                .Include(x => x.Owner)
+                .Include(x => x.Images)
+                .ToListAsync();
         }
 
         public async Task<bool> InsertRestaurantApplicationAsync(RestaurantApplication application)

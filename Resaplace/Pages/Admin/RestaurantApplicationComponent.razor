@@ -1,0 +1,21 @@
+﻿<div class="card" style="width: 18rem;">
+    <img class="card-img-top" src="@mainImagePath" alt="@RestaurantApplication.Images.First().AltText">
+    <div class="card-body">
+        <h5 class="card-title">@RestaurantApplication.Name</h5>
+        <p class="card-text">@RestaurantApplication.Description</p>
+    </div>
+    <ul class="list-group list-group-flush">
+        <li class="list-group-item">@RestaurantApplication.Country</li>
+        <li class="list-group-item">@RestaurantApplication.City</li>
+        <li class="list-group-item">@RestaurantApplication.StreetAddress</li>
+        <li class="list-group-item">@RestaurantApplication.Owner.Email</li>
+        <li class="list-group-item">@RestaurantApplication.PhoneNumber</li>
+        <li class="list-group-item">Маси: @RestaurantApplication.TotalTables</li>
+        <li class="list-group-item">Места: @RestaurantApplication.TotalSeats</li>
+    </ul>
+    <div class="card-body">
+        <button type="button" class="btn btn-outline-danger">Откажи</button>
+        <button type="button" class="btn btn-outline-success">Одобри</button>
+    </div>
+</div>
+

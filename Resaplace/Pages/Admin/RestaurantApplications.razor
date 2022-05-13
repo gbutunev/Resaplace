@@ -1,0 +1,18 @@
+﻿@page "/restaurantapplications"
+@attribute [Authorize]
+
+<h3>Заявки за нови ресторанти</h3>
+
+@if (Applications == null || Applications.Count == 0)
+{
+    <p>
+        Няма текущи заявки.
+    </p>
+}
+else
+{
+    @foreach (var appl in Applications)
+    {
+        <RestaurantApplicationComponent RestaurantApplication=@appl />
+    }
+}

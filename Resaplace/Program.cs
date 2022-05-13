@@ -14,19 +14,20 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlServer(connectionString));
+        options.UseSqlServer(connectionString)
+    );
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddRazorPages();
-    //חא ונמנט
-    //.AddMvcOptions(options =>
-    //{
-    //    options.MaxModelValidationErrors = 50;
-    //    options.ModelBindingMessageProvider.SetValueMustBeANumberAccessor(
-    //        _ => "אסהכךפ;יאסהכךפי");
-    //});
+//חא ונמנט
+//.AddMvcOptions(options =>
+//{
+//    options.MaxModelValidationErrors = 50;
+//    options.ModelBindingMessageProvider.SetValueMustBeANumberAccessor(
+//        _ => "אסהכךפ;יאסהכךפי");
+//});
 builder.Services.AddServerSideBlazor();
 builder.Services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<IdentityUser>>();
 
