@@ -12,8 +12,9 @@ namespace Resaplace.Services
             this.dbContext = dbContext;
         }
 
-        public async Task<bool> InsertRestaurantAsync(Restaurant restaurant)
+        public async Task<bool> InsertRestaurantWithApplicationAsync(Restaurant restaurant, RestaurantApplication application)
         {
+            application.ApplicationStatus = BasicStatus.Accepted;
             await dbContext.Restaurants.AddAsync(restaurant);
             await dbContext.SaveChangesAsync();
             return true;

@@ -61,8 +61,7 @@ namespace Resaplace.Pages.Admin
                 Owner = CurrentApplication.Owner,
             };
 
-            await ResApplicationService.ChangeRestaurantApplicationStatusAsync(Id, BasicStatus.Accepted);
-            await RestaurantService.InsertRestaurantAsync(newRestaurant);
+            await RestaurantService.InsertRestaurantWithApplicationAsync(newRestaurant, CurrentApplication);
 
             ToastService.ShowSuccess("Ресторантът е успешно създаден!");
             NavigationManager.NavigateTo("/restaurantapplications");
