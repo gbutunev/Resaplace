@@ -30,5 +30,12 @@ namespace Resaplace.Services
                 .Include(x => x.Images)
                 .ToListAsync();
         }
+
+        public bool DeleteRestaurant(Restaurant restaurant)
+        {
+            dbContext.Restaurants.Remove(restaurant);
+            dbContext.SaveChanges();
+            return true;
+        }
     }
 }
