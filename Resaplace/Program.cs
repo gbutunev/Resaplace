@@ -34,6 +34,7 @@ builder.Services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuth
 builder.Services.AddBlazoredToast();
 
 builder.Services.AddScoped<RestaurantApplicationsService>();
+builder.Services.AddScoped<RestaurantService>();
 
 var app = builder.Build();
 

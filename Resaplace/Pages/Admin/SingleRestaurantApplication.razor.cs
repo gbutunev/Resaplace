@@ -11,7 +11,11 @@ namespace Resaplace.Pages.Admin
         [Inject]
         private RestaurantApplicationsService ResApplicationService { get; set; }
         [Inject]
+        private RestaurantService RestaurantService { get; set; }
+        [Inject]
         private IToastService ToastService { get; set; }
+        [Inject]
+        private NavigationManager NavigationManager { get; set; }
         #endregion
 
         #region PARAMETERS
@@ -33,6 +37,7 @@ namespace Resaplace.Pages.Admin
         protected override async Task OnParametersSetAsync()
         {
             CurrentApplication = await ResApplicationService.GetRestaurantApplicationByIdAsync(Id);
+            if (CurrentApplication.ApplicationStatus != BasicStatus.Pending) NavigationManager.NavigateTo("/restaurantapplications");
             if (CurrentApplication == null) InitialMessage = "Заявката не съществува.";
         }
 
@@ -40,9 +45,27 @@ namespace Resaplace.Pages.Admin
 
         private void CancelApproval() => ShowAcceptPopup = false;
 
-        private void AcceptApproval()
+        private async Task AcceptApproval()
         {
+            Restaurant newRestaurant = new Restaurant()
+            {
+                Name = CurrentApplication.Name,
+                Description = CurrentApplication.Description,
+                Country = CurrentApplication.Country,
+                City = CurrentApplication.City,
+                StreetAddress = CurrentApplication.StreetAddress,
+                PhoneNumber = CurrentApplication.PhoneNumber,
+                TotalTables = CurrentApplication.TotalTables,
+                TotalSeats = CurrentApplication.TotalSeats,
+                Images = CurrentApplication.Images,
+                Owner = CurrentApplication.Owner,
+            };
 
+            await ResApplicationService.ChangeRestaurantApplicationStatusAsync(Id, BasicStatus.Accepted);
+            await RestaurantService.InsertRestaurantAsync(newRestaurant);
+
+            ToastService.ShowSuccess("Ресторантът е успешно създаден!");
+            NavigationManager.NavigateTo("/restaurantapplications");
         }
 
         private void DenyRestaurantButtonClick()
