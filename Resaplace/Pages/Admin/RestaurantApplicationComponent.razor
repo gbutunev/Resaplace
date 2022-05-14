@@ -1,4 +1,6 @@
-﻿<div class="card" style="width: 18rem;">
+﻿@using Resaplace.Data.Models
+
+<div class="card" style="width: 18rem;">
     <img class="card-img-top" src="@mainImagePath" alt="@RestaurantApplication.Images.First().AltText">
     <div class="card-body">
         <h5 class="card-title">@RestaurantApplication.Name</h5>
@@ -13,8 +15,30 @@
         <li class="list-group-item">Маси: @RestaurantApplication.TotalTables</li>
         <li class="list-group-item">Места: @RestaurantApplication.TotalSeats</li>
     </ul>
-    <div class="card-body">
-        <a href="/restaurantapplications/@RestaurantApplication.Id" class="card-link">Преглед</a>
-    </div>
+
+    @switch (@RestaurantApplication.ApplicationStatus)
+    {
+        case BasicStatus.Pending:
+            <div class="card-body">
+                <a href="/restaurantapplications/@RestaurantApplication.Id" class="card-link">Преглед</a>
+            </div>
+            break;
+        case BasicStatus.Accepted:
+            <div class="card-body">
+                <div class="alert alert-success">
+                    Одобрен
+                </div>
+            </div>
+            break;
+        case BasicStatus.Declined:
+            <div class="card-body">
+                <div class="alert alert-danger">
+                    Отказан
+                    <br>
+                    @RestaurantApplication.FeedbackMessage
+                </div>
+            </div>
+            break;
+    }
 </div>
 

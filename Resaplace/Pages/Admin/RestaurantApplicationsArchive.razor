@@ -1,0 +1,14 @@
+﻿@page "/restaurantapplications/archive"
+@using Resaplace.Data.Models
+@attribute [Authorize]
+
+<h3>Архив - заявки за ресторанти</h3>
+
+<div class="row row-cols-1 row-cols-md-5 g-4">
+    @foreach (var appl in Applications)
+    {
+        <div class="col">
+            <RestaurantApplicationComponent RestaurantApplication=@appl />
+        </div>
+    }
+</div>

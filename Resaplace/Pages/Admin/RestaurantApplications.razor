@@ -2,6 +2,7 @@
 @attribute [Authorize]
 
 <h3>Заявки за нови ресторанти</h3>
+<a href="restaurantapplications/archive">Архив</a>
 
 @if (Applications == null || Applications.Count == 0)
 {
@@ -11,8 +12,12 @@
 }
 else
 {
-    @foreach (var appl in Applications)
-    {
-        <RestaurantApplicationComponent RestaurantApplication=@appl />
-    }
+    <div class="row row-cols-1 row-cols-md-5 g-4">
+        @foreach (var appl in Applications)
+        {
+            <div class="col">
+                <RestaurantApplicationComponent RestaurantApplication=@appl />
+            </div>
+        }
+    </div>
 }

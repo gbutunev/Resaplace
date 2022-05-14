@@ -14,7 +14,7 @@ namespace Resaplace.Pages.Admin
 
         protected override async Task OnInitializedAsync()
         {
-            Applications = await ResApplicationService.GetAllRestaurantApplicationsAsync();
+            Applications = await ResApplicationService.GetPendingRestaurantApplicationAsync();
         }
     }
 }

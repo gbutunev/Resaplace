@@ -23,6 +23,26 @@ namespace Resaplace.Services
                 .ToListAsync();
         }
 
+        public async Task<List<RestaurantApplication>> GetArchivedRestaurantApplicationAsync()
+        {
+            return await dbContext
+                .RestaurantApplications
+                .Where(x=>x.ApplicationStatus == BasicStatus.Accepted || x.ApplicationStatus == BasicStatus.Declined)
+                .Include(x => x.Owner)
+                .Include(x => x.Images)
+                .ToListAsync();
+        }
+
+        public async Task<List<RestaurantApplication>> GetPendingRestaurantApplicationAsync()
+        {
+            return await dbContext
+                .RestaurantApplications
+                .Where(x => x.ApplicationStatus == BasicStatus.Pending)
+                .Include(x => x.Owner)
+                .Include(x => x.Images)
+                .ToListAsync();
+        }
+
         public async Task<RestaurantApplication> GetRestaurantApplicationByIdAsync(int id)
         {
             return await dbContext
