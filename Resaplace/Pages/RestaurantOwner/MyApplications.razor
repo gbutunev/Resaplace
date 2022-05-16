@@ -1,0 +1,27 @@
+﻿@page "/myrestaurantapplications"
+@using Resaplace.Pages.Admin
+@attribute [Authorize]
+
+<h3>Моите заявки за създаване на ресторанти</h3>
+
+<h4>Текущи заявки</h4>
+
+<div class="row row-cols-1 row-cols-md-5 g-4">
+    @foreach (var appl in CurrentApplications)
+    {
+        <div class="col">
+            <RestaurantApplicationComponent Application=@appl />
+        </div>
+    }
+</div>
+
+<h4>Архив на заявките</h4>
+
+<div class="row row-cols-1 row-cols-md-5 g-4">
+    @foreach (var appl in ArchivedApplications)
+    {
+        <div class="col">
+            <RestaurantApplicationComponent Application=@appl />
+        </div>
+    }
+</div>

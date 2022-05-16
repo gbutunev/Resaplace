@@ -43,7 +43,7 @@ namespace Resaplace.Pages.RestaurantOwner
             }
 
             IdentityUser idUser = await UserManager.FindByNameAsync(user.Identity.Name);
-            List<Image> images = new List<Image>();
+            List<Image> images = new();
             try
             {
                 foreach (IBrowserFile file in ModelFiles)
@@ -64,7 +64,7 @@ namespace Resaplace.Pages.RestaurantOwner
                 return;
             }
 
-            RestaurantApplication restaurantApplication = new RestaurantApplication(Model, idUser, images, BasicStatus.Pending);
+            RestaurantApplication restaurantApplication = new(Model, idUser, images, BasicStatus.Pending);
 
 
             await ResApplicationService.InsertRestaurantApplicationAsync(restaurantApplication);

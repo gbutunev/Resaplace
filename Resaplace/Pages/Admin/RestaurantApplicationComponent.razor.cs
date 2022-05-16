@@ -6,13 +6,13 @@ namespace Resaplace.Pages.Admin
     public partial class RestaurantApplicationComponent : ComponentBase
     {
         [Parameter]
-        public RestaurantApplication RestaurantApplication { get; set; }
+        public RestaurantApplication Application { get; set; }
 
         private string mainImagePath = string.Empty;
 
         protected override void OnParametersSet()
         {
-            string imgName = RestaurantApplication.Images.First().ImagePath;
+            string imgName = Application.Images.First().ImagePath;
             mainImagePath = Path.Combine("/", "images", imgName);
         }
     }

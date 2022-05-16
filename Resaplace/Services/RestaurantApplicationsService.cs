@@ -27,7 +27,7 @@ namespace Resaplace.Services
         {
             return await dbContext
                 .RestaurantApplications
-                .Where(x=>x.ApplicationStatus == BasicStatus.Accepted || x.ApplicationStatus == BasicStatus.Declined)
+                .Where(x => x.ApplicationStatus == BasicStatus.Accepted || x.ApplicationStatus == BasicStatus.Declined)
                 .Include(x => x.Owner)
                 .Include(x => x.Images)
                 .ToListAsync();
@@ -63,11 +63,33 @@ namespace Resaplace.Services
                 .ToListAsync();
         }
 
-        public async Task<List<RestaurantApplication>> GetRestaurantApplicationsByOwnerAsync(IdentityUser owner)
+        public async Task<List<RestaurantApplication>> GetAllRestaurantApplicationsByOwnerAsync(IdentityUser owner)
         {
             return await dbContext
                 .RestaurantApplications
                 .Where(x => x.Owner == owner)
+                .Include(x => x.Owner)
+                .Include(x => x.Images)
+                .ToListAsync();
+        }
+
+        public async Task<List<RestaurantApplication>> GetPendingRestaurantApplicationsByOwnerAsync(IdentityUser owner)
+        {
+            return await dbContext
+                .RestaurantApplications
+                .Where(x => x.Owner == owner)
+                .Where(x => x.ApplicationStatus == BasicStatus.Pending)
+                .Include(x => x.Owner)
+                .Include(x => x.Images)
+                .ToListAsync();
+        }
+
+        public async Task<List<RestaurantApplication>> GetArchivedRestaurantApplicationsByOwnerAsync(IdentityUser owner)
+        {
+            return await dbContext
+                .RestaurantApplications
+                .Where(x => x.Owner == owner)
+                .Where(x => x.ApplicationStatus == BasicStatus.Accepted || x.ApplicationStatus == BasicStatus.Declined)
                 .Include(x => x.Owner)
                 .Include(x => x.Images)
                 .ToListAsync();
