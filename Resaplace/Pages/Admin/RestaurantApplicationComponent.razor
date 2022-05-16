@@ -1,26 +1,26 @@
 ﻿@using Resaplace.Data.Models
 
 <div class="card" style="width: 18rem;">
-    <img class="card-img-top" src="@mainImagePath" alt="@Application.Images.First().AltText">
+    <img class="card-img-top" src="@mainImagePath" alt="@RestaurantApplication.Images.First().AltText">
     <div class="card-body">
-        <h5 class="card-title">@Application.Name</h5>
-        <p class="card-text">@Application.Description</p>
+        <h5 class="card-title">@RestaurantApplication.Name</h5>
+        <p class="card-text">@RestaurantApplication.Description</p>
     </div>
     <ul class="list-group list-group-flush">
-        <li class="list-group-item">@Application.Country</li>
-        <li class="list-group-item">@Application.City</li>
-        <li class="list-group-item">@Application.StreetAddress</li>
-        <li class="list-group-item">@Application.Owner.Email</li>
-        <li class="list-group-item">@Application.PhoneNumber</li>
-        <li class="list-group-item">Маси: @Application.TotalTables</li>
-        <li class="list-group-item">Места: @Application.TotalSeats</li>
+        <li class="list-group-item">@RestaurantApplication.Country</li>
+        <li class="list-group-item">@RestaurantApplication.City</li>
+        <li class="list-group-item">@RestaurantApplication.StreetAddress</li>
+        <li class="list-group-item">@RestaurantApplication.Owner.Email</li>
+        <li class="list-group-item">@RestaurantApplication.PhoneNumber</li>
+        <li class="list-group-item">Маси: @RestaurantApplication.TotalTables</li>
+        <li class="list-group-item">Места: @RestaurantApplication.TotalSeats</li>
     </ul>
 
-    @switch (@Application.ApplicationStatus)
+    @switch (RestaurantApplication.ApplicationStatus)
     {
         case BasicStatus.Pending:
             <div class="card-body">
-                <a href="/restaurantapplications/@Application.Id" class="card-link">Преглед</a>
+                <a href="/restaurantapplications/@RestaurantApplication.Id" class="card-link">Преглед</a>
             </div>
             break;
         case BasicStatus.Accepted:
@@ -35,7 +35,7 @@
                 <div class="alert alert-danger">
                     Отказан
                     <br>
-                    @Application.FeedbackMessage
+                    @RestaurantApplication.FeedbackMessage
                 </div>
             </div>
             break;
