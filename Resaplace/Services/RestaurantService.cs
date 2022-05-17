@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Resaplace.Data;
 using Resaplace.Data.Models;
 
@@ -25,6 +26,17 @@ namespace Resaplace.Services
         {
             return await dbContext
                 .Restaurants
+                .Include(x => x.Owner)
+                .Include(x => x.Dishes)
+                .Include(x => x.Images)
+                .ToListAsync();
+        }
+
+        public async Task<List<Restaurant>> GetRestaurantsByOwner(IdentityUser owner)
+        {
+            return await dbContext
+                .Restaurants
+                .Where(x => x.Owner == owner)
                 .Include(x => x.Owner)
                 .Include(x => x.Dishes)
                 .Include(x => x.Images)

@@ -1,0 +1,54 @@
+﻿@page "/myrestaurants"
+@attribute [Authorize]
+
+<h3>Моите ресторанти</h3>
+
+@foreach (var res in Restaurants)
+{
+    <div class="container border rounded mb-5 p-3">
+        <div class="row row-cols-1 row-cols-md-3 g-4">
+            @foreach (var image in res.Images)
+            {
+                <div class="col">
+                    <img src="/images/@image.ImagePath" class="card-img-top" alt="@image.AltText">
+                </div>
+            }
+        </div>
+        <table class="table">
+            <tbody>
+                <tr>
+                    <th scope="row">Име</th>
+                    <td>@res.Name</td>
+                </tr>
+                <tr>
+                    <th scope="row">Описание</th>
+                    <td>@res.Description</td>
+                </tr>
+                <tr>
+                    <th scope="row">Адрес</th>
+                    <td>@res.Country, @res.City, @res.StreetAddress</td>
+                </tr>
+                <tr>
+                    <th scope="row">Телефон за връзка</th>
+                    <td>@res.PhoneNumber</td>
+                </tr>
+                <tr>
+                    <th scope="row">Брой маси</th>
+                    <td>@res.TotalTables</td>
+                </tr>
+                <tr>
+                    <th scope="row">Брой места</th>
+                    <td>@res.TotalSeats</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="btn-group" role="group" aria-label="Basic example">
+            <button type="button" class="btn btn-secondary">Управление на служители</button>
+            <button type="button" class="btn btn-secondary">Управление на ястия/напитки</button>
+            <button type="button" class="btn btn-secondary">Промяна на информация</button>
+        </div>
+        <button type="button" class="btn btn-danger">Изтриване на ресторант</button>
+
+    </div>
+}
