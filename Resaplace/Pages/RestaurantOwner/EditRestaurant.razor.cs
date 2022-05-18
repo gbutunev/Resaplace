@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Components;
+﻿using Blazored.Toast.Services;
+using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Resaplace.Data.Models;
@@ -21,9 +22,13 @@ namespace Resaplace.Pages.RestaurantOwner
         private UserManager<IdentityUser> UserManager { get; set; }
         [Inject]
         private NavigationManager NavManager { get; set; }
+        [Inject]
+        private IToastService ToastService { get; set; }
 
         private Restaurant RestaurantToEdit { get; set; } = new Restaurant();
         private FormEditRestaurant Model { get; set; } = new FormEditRestaurant();
+
+        private bool EditRestaurantPopup { get; set; } = false;
 
         protected override async Task OnInitializedAsync()
         {
@@ -50,7 +55,29 @@ namespace Resaplace.Pages.RestaurantOwner
 
         private void OnSubmit()
         {
+            EditRestaurantPopup = true;
+        }
 
+        private void CancelEdit()
+        {
+            EditRestaurantPopup = false;
+        }
+
+        private async Task AcceptEdit()
+        {
+            RestaurantToEdit.Name = Model.Name;
+            RestaurantToEdit.Description = Model.Description;
+            RestaurantToEdit.Country = Model.Country;
+            RestaurantToEdit.City = Model.City;
+            RestaurantToEdit.StreetAddress = Model.StreetAddress;
+            RestaurantToEdit.PhoneNumber = Model.PhoneNumber;
+            RestaurantToEdit.TotalSeats = Model.TotalSeats;
+            RestaurantToEdit.TotalTables = Model.TotalTables;
+
+            await RestaurantService.UpdateRestaurantAsync(RestaurantToEdit);
+            EditRestaurantPopup = false;
+            ToastService.ShowSuccess("Ресторантът е променен успешно!");
+            NavManager.NavigateTo("/myrestaurants");
         }
     }
 }

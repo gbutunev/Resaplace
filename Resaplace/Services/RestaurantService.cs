@@ -51,6 +51,13 @@ namespace Resaplace.Services
                 .FirstOrDefaultAsync();
         }
 
+        public async Task<bool> UpdateRestaurantAsync(Restaurant restaurant)
+        {
+            dbContext.Restaurants.Update(restaurant);
+            await dbContext.SaveChangesAsync();
+            return true;
+        }
+
         public bool DeleteRestaurant(Restaurant restaurant)
         {
             dbContext.Restaurants.Remove(restaurant);
