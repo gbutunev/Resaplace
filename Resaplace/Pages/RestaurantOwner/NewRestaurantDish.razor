@@ -1,0 +1,24 @@
+﻿@page "/myrestaurants/{Id:int}/dishes/new"
+
+<h3>Добавяне на ново ястие / напитка</h3>
+
+<EditForm Model="@Model" OnValidSubmit="@SubmitData">
+    <DataAnnotationsValidator />
+    <div class="mb-3">
+        <label for="r-name" class="form-label">Име</label>
+        <InputText @bind-Value="Model.Name" id="r-name" class="form-control" />
+    </div>
+    <div class="mb-3">
+        <label for="r-tables" class="form-label">Цена</label>
+        <InputNumber @bind-Value="Model.Price" id="r-tables" class="form-control"/>
+    </div>
+    <div class="mb-3">
+        <label for="r-pictures" class="form-label">Снимка (до 5 MB)</label>
+        @if (BoolClearInputFile)
+        {
+            <InputFile OnChange="@LoadFiles" id="r-pictures" class="form-control form-control-lg"/>
+        }
+    </div>
+    <button type="submit" class="btn btn-success">Добавяне</button>
+    <ValidationSummary class="form-text" />
+</EditForm>

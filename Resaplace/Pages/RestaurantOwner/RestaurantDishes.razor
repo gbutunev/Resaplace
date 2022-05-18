@@ -1,0 +1,20 @@
+﻿@page "/myrestaurants/{Id:int}/dishes"
+
+<h3>Ресторант @CurrentRestaurant.Name - Ястия и напитки</h3>
+
+<a href="/myrestaurants/@Id/dishes/new" class="btn btn-primary">Ново ястие/напитка</a>
+
+@foreach (var d in Dishes)
+{
+    <div class="card" style="width: 18rem;">
+        <img class="card-img-top" src="/images/@d.Image.ImagePath" alt="@d.Name">
+        <div class="card-body">
+            <h5 class="card-title">@d.Name</h5>
+            <p class="card-text">@d.Price</p>
+            <div class="btn-group" role="group" aria-label="Basic example">
+                <a href="#" class="btn btn-secondary">Промяна</a>
+                <button type="button" class="btn btn-danger">Изтриване</button>
+            </div>
+        </div>
+    </div>
+}

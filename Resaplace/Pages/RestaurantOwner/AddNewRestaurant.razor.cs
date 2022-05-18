@@ -48,7 +48,7 @@ namespace Resaplace.Pages.RestaurantOwner
             {
                 foreach (IBrowserFile file in ModelFiles)
                 {
-                    var fileExtension = GetFileExtension(file);
+                    var fileExtension = Utils.GetFileExtension(file);
                     var randomFileName = Guid.NewGuid().ToString() + fileExtension;
                     var path = Path.Combine(Env.WebRootPath, "images", randomFileName);
 
@@ -68,16 +68,6 @@ namespace Resaplace.Pages.RestaurantOwner
 
 
             await ResApplicationService.InsertRestaurantApplicationAsync(restaurantApplication);
-        }
-
-        private static string GetFileExtension(IBrowserFile image)
-        {
-            return image.ContentType switch
-            {
-                "image/png" => ".png",
-                "image/jpeg" => ".jpeg",
-                _ => ".tmp",
-            };
         }
 
         private async Task LoadFiles(InputFileChangeEventArgs e)

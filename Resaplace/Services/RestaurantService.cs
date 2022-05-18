@@ -48,6 +48,9 @@ namespace Resaplace.Services
             return await dbContext
                 .Restaurants
                 .Where(x => x.Id == id)
+                .Include(x => x.Owner)
+                .Include(x => x.Dishes)
+                .Include(x => x.Images)
                 .FirstOrDefaultAsync();
         }
 
