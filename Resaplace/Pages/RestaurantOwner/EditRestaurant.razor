@@ -1,0 +1,50 @@
+﻿@page "/myrestaurants/edit/{Id:int}"
+@attribute [Authorize]
+
+<h3>Промяна на ресторант @Model.Name</h3>
+
+<EditForm Model="@Model" OnValidSubmit="@OnSubmit">
+    <DataAnnotationsValidator />
+    <div class="mb-3">
+        <label for="r-name" class="form-label">Наименование</label>
+        <InputText @bind-Value="Model.Name" id="r-name" class="form-control" />
+    </div>
+    <div class="mb-3">
+        <label for="r-desc" class="form-label">Описание</label>
+        <InputText @bind-Value="Model.Description" id="r-desc" class="form-control" />
+    </div>
+    <div class="mb-3">
+        <label for="r-country" class="form-label">Държава</label>
+        <InputText @bind-Value="Model.Country" id="r-country" class="form-control" />
+    </div>
+    <div class="mb-3">
+        <label for="r-city" class="form-label">Град</label>
+        <InputText @bind-Value="Model.City" id="r-city" class="form-control" />
+    </div>
+    <div class="mb-3">
+        <label for="r-address" class="form-label">Адрес</label>
+        <InputText @bind-Value="Model.StreetAddress" id="r-address" class="form-control" />
+    </div>
+    <div class="mb-3">
+        <label for="r-phone" class="form-label">Телефонен номер за връзка</label>
+        <InputText @bind-Value="Model.PhoneNumber" id="r-phone" class="form-control"/>
+    </div>
+    <div class="mb-3">
+        <label for="r-tables" class="form-label">Брой маси</label>
+        <InputNumber @bind-Value="Model.TotalTables" id="r-tables" class="form-control"/>
+    </div>
+    <div class="mb-3">
+        <label for="r-seats" class="form-label">Общ брой места</label>
+        <InputNumber @bind-Value="Model.TotalSeats" id="r-seats" class="form-control"/>
+    </div>
+@*    <div class="mb-3">
+        <label for="r-pictures" class="form-label">Снимки (3 броя, до 5MB всяка)</label>
+        @if (BoolClearInputFile)
+        {
+            <InputFile OnChange="@LoadFiles" multiple id="r-pictures" class="form-control form-control-lg"/>
+        }
+    </div>*@
+    <button type="submit" class="btn btn-success">Промяна</button>
+
+    <ValidationSummary class="form-text" />
+</EditForm>

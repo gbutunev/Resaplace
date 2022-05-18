@@ -43,6 +43,14 @@ namespace Resaplace.Services
                 .ToListAsync();
         }
 
+        public async Task<Restaurant> GetRestaurantByIdAsync(int id)
+        {
+            return await dbContext
+                .Restaurants
+                .Where(x => x.Id == id)
+                .FirstOrDefaultAsync();
+        }
+
         public bool DeleteRestaurant(Restaurant restaurant)
         {
             dbContext.Restaurants.Remove(restaurant);

@@ -35,6 +35,7 @@ builder.Services.AddBlazoredToast();
 
 builder.Services.AddScoped<RestaurantApplicationsService>();
 builder.Services.AddScoped<RestaurantService>();
+builder.Services.AddScoped<OwnershipCheckService>();
 
 var app = builder.Build();
 

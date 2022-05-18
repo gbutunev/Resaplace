@@ -14,6 +14,8 @@ namespace Resaplace.Pages.RestaurantOwner
         private RestaurantService RestaurantService { get; set; }
         [Inject]
         private UserManager<IdentityUser> UserManager { get; set; }
+        [Inject]
+        private NavigationManager NavManager { get; set; }
 
         private List<Restaurant> Restaurants { get; set; } = new List<Restaurant>();
 
@@ -24,6 +26,11 @@ namespace Resaplace.Pages.RestaurantOwner
             IdentityUser idUser = await UserManager.FindByNameAsync(user.Identity.Name);
 
             Restaurants = await RestaurantService.GetRestaurantsByOwner(idUser);
+        }
+
+        private void NavigateToRestaurant(int restaurantId)
+        {
+            NavManager.NavigateTo($"/myrestaurants/edit/{restaurantId}");
         }
     }
 }

@@ -46,7 +46,7 @@
         <div class="btn-group" role="group" aria-label="Basic example">
             <button type="button" class="btn btn-secondary">Управление на служители</button>
             <button type="button" class="btn btn-secondary">Управление на ястия/напитки</button>
-            <button type="button" class="btn btn-secondary">Промяна на информация</button>
+            <button type="button" class="btn btn-secondary" @onclick="@(() => NavigateToRestaurant(res.Id))">Промяна на информация</button>
         </div>
         <button type="button" class="btn btn-danger">Изтриване на ресторант</button>
 
