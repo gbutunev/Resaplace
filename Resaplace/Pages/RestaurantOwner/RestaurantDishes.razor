@@ -13,7 +13,28 @@
             <p class="card-text">@d.Price</p>
             <div class="btn-group" role="group" aria-label="Basic example">
                 <a href="/myrestaurants/@Id/dishes/@d.Id/edit" class="btn btn-secondary">Промяна</a>
-                <button type="button" class="btn btn-danger">Изтриване</button>
+                <button type="button" class="btn btn-danger" @onclick="@(() => ShowDeletePopup(d))">Изтриване</button>
+            </div>
+        </div>
+    </div>
+}
+
+@if (DeletePopup)
+{
+    <div class="modal" tabindex="-1" role="dialog" style="display: block">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Изтриване на @DishToBeDeleted.Name</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" @onclick="@CancelDeletion"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Сигурни ли сте, че искате да изтриете ресторант @DishToBeDeleted.Name? Това действие ще изтрие всичката информация, свързана с него и ще бъде премахнато от всички съществуващи резервации!</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" @onclick="@CancelDeletion">Не</button>
+                    <button type="button" class="btn btn-success" @onclick="@AcceptDeletion">Да</button>
+                </div>
             </div>
         </div>
     </div>

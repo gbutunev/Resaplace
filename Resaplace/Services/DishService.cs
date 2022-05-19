@@ -44,5 +44,12 @@ namespace Resaplace.Services
             await dbContext.SaveChangesAsync();
             return true;
         }
+
+        public async Task<bool> RemoveDishAsync(Dish dish)
+        {
+            dbContext.Dishes.Remove(dish);
+            await dbContext.SaveChangesAsync();
+            return true;
+        }
     }
 }

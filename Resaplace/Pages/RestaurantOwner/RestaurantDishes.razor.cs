@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Components;
+﻿using Blazored.Toast.Services;
+using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Resaplace.Data.Models;
@@ -23,9 +24,13 @@ namespace Resaplace.Pages.RestaurantOwner
         private NavigationManager NavManager { get; set; }
         [Inject]
         private OwnershipCheckService CheckService { get; set; }
+        [Inject]
+        private IToastService ToastService { get; set; }
 
         private Restaurant CurrentRestaurant { get; set; } = new Restaurant();
         private List<Dish> Dishes { get; set; } = new List<Dish>();
+        private bool DeletePopup { get; set; } = false;
+        private Dish DishToBeDeleted { get; set; }
 
         protected override async Task OnInitializedAsync()
         {
@@ -37,6 +42,27 @@ namespace Resaplace.Pages.RestaurantOwner
             if (!userIsOwner) NavManager.NavigateTo("/myrestaurants");
 
             CurrentRestaurant = await RestaurantService.GetRestaurantByIdAsync(Id);
+            Dishes = await DishService.GetDishesByRestaurantIdAsync(Id);
+        }
+
+        private void ShowDeletePopup(Dish dish)
+        {
+            DishToBeDeleted = dish;
+            DeletePopup = true;
+        }
+
+        private void CancelDeletion()
+        {
+            DishToBeDeleted = null;
+            DeletePopup = false;
+        }
+
+        private async Task AcceptDeletion()
+        {
+            await DishService.RemoveDishAsync(DishToBeDeleted);
+            ToastService.ShowInfo($"Ястие {DishToBeDeleted.Name} е изтрито успешно!");
+            DeletePopup = false;
+            DishToBeDeleted = null;
             Dishes = await DishService.GetDishesByRestaurantIdAsync(Id);
         }
     }
