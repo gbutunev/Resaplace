@@ -28,5 +28,21 @@ namespace Resaplace.Services
                 .Include(x =>x.Image)
                 .ToListAsync();
         }
+
+        public async Task<Dish> GetDishByIdAsync(int dishId)
+        {
+            return await dbContext
+                .Dishes
+                .Where(x => x.Id == dishId)
+                .Include(x => x.Image)
+                .FirstOrDefaultAsync();
+        }
+
+        public async Task<bool> UpdateDishAsync(Dish dish)
+        {
+            dbContext.Dishes.Update(dish);
+            await dbContext.SaveChangesAsync();
+            return true;
+        }
     }
 }

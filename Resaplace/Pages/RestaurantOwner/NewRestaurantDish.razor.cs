@@ -84,7 +84,7 @@ namespace Resaplace.Pages.RestaurantOwner
             };
 
             await DishService.InsertDishAsync(newDish);
-            ToastService.ShowError("Продуктът е успешно добавен!");
+            ToastService.ShowSuccess("Продуктът е успешно добавен!");
             NavManager.NavigateTo($"/myrestaurants/{Id}/dishes");
         }
 

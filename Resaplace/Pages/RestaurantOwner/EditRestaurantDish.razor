@@ -1,0 +1,27 @@
+﻿@page "/myrestaurants/{RestaurantId:int}/dishes/{DishId:int}/edit"
+
+<h3>Редактиране на ястие / напитка</h3>
+
+<EditForm Model="@Model" OnValidSubmit="@SubmitData">
+    <DataAnnotationsValidator />
+    <div class="mb-3">
+        <label for="r-name" class="form-label">Име</label>
+        <InputText @bind-Value="Model.Name" id="r-name" class="form-control" />
+    </div>
+    <div class="mb-3">
+        <label for="r-tables" class="form-label">Цена</label>
+        <InputNumber @bind-Value="Model.Price" id="r-tables" class="form-control" />
+    </div>
+    <div class="mb-3">
+        <label for="r-pictures" class="form-label">Снимка (до 5 MB)</label>
+        @if (BoolClearInputFile)
+        {
+            <InputFile OnChange="@LoadFiles" id="r-pictures" class="form-control form-control-lg" />
+        }
+    </div>
+    <div class="alert alert-info" role="alert">
+        Ако не качите снимка, ще се използва старата.
+    </div>
+    <button type="submit" class="btn btn-success">Промяна</button>
+    <ValidationSummary class="form-text" />
+</EditForm>
