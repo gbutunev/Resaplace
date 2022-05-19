@@ -51,7 +51,7 @@ namespace Resaplace.Pages.RestaurantOwner
 
         private void CancelDeletion()
         {
-            RestaurantToBeDeleted = new Restaurant();
+            RestaurantToBeDeleted = null;
             DeleteRestaurantPopup = false;
         }
 

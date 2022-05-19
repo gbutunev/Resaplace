@@ -30,7 +30,7 @@ namespace Resaplace.Pages.Admin
 
         private void CancelDeletion()
         {
-            RestaurantToBeDeleted = new Restaurant();
+            RestaurantToBeDeleted = null;
             DeleteRestaurantPopup = false;
         }
 
