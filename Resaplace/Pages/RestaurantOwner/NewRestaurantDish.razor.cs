@@ -14,7 +14,7 @@ namespace Resaplace.Pages.RestaurantOwner
         public int Id { get; set; }
 
         [CascadingParameter]
-        private Task<AuthenticationState> authenticationStateTask { get; set; }
+        private Task<AuthenticationState> AuthenticationStateTask { get; set; }
 
         [Inject]
         private IToastService ToastService { get; set; }
@@ -38,7 +38,7 @@ namespace Resaplace.Pages.RestaurantOwner
 
         protected override async Task OnInitializedAsync()
         {
-            var authState = await authenticationStateTask;
+            var authState = await AuthenticationStateTask;
             var user = authState.User;
             CurrentUser = await UserManager.FindByNameAsync(user.Identity.Name);
 
@@ -75,7 +75,7 @@ namespace Resaplace.Pages.RestaurantOwner
                 return;
             }
 
-            Dish newDish = new Dish()
+            Dish newDish = new()
             {
                 Name = Model.Name,
                 Price = Model.Price,
@@ -88,7 +88,7 @@ namespace Resaplace.Pages.RestaurantOwner
             NavManager.NavigateTo($"/myrestaurants/{Id}/dishes");
         }
 
-        private async Task LoadFiles(InputFileChangeEventArgs e)
+        private void LoadFiles(InputFileChangeEventArgs e)
         {
             Model.Image = null;
 

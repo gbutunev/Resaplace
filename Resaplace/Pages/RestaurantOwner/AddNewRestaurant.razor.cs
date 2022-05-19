@@ -12,7 +12,7 @@ namespace Resaplace.Pages.RestaurantOwner
     public partial class AddNewRestaurant : ComponentBase
     {
         [CascadingParameter]
-        private Task<AuthenticationState> authenticationStateTask { get; set; }
+        private Task<AuthenticationState> AuthenticationStateTask { get; set; }
         [Inject]
         private IWebHostEnvironment Env { get; set; }
         [Inject]
@@ -25,15 +25,9 @@ namespace Resaplace.Pages.RestaurantOwner
         private List<IBrowserFile> ModelFiles { get; set; } = new List<IBrowserFile>();
         private bool BoolClearInputFile { get; set; } = true;
 
-        protected override async Task OnInitializedAsync()
-        {
-            var authState = await authenticationStateTask;
-            var user = authState.User;
-        }
-
         private async Task SubmitData()
         {
-            var authState = await authenticationStateTask;
+            var authState = await AuthenticationStateTask;
             var user = authState.User;
 
             if (ModelFiles.Count != 3)
@@ -55,7 +49,7 @@ namespace Resaplace.Pages.RestaurantOwner
                     await using FileStream fs = new(path, FileMode.Create);
                     await file.OpenReadStream(5120000).CopyToAsync(fs);
 
-                    images.Add(new Image() { ImagePath = randomFileName, AltText = $"Restaurant image {images.Count + 1}"});
+                    images.Add(new Image() { ImagePath = randomFileName, AltText = $"Restaurant image {images.Count + 1}" });
                 }
             }
             catch (Exception)
@@ -70,7 +64,7 @@ namespace Resaplace.Pages.RestaurantOwner
             await ResApplicationService.InsertRestaurantApplicationAsync(restaurantApplication);
         }
 
-        private async Task LoadFiles(InputFileChangeEventArgs e)
+        private void LoadFiles(InputFileChangeEventArgs e)
         {
             ModelFiles.Clear();
 

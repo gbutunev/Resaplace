@@ -13,7 +13,7 @@ namespace Resaplace.Pages.RestaurantOwner
         public int Id { get; set; }
 
         [CascadingParameter]
-        private Task<AuthenticationState> authenticationStateTask { get; set; }
+        private Task<AuthenticationState> AuthenticationStateTask { get; set; }
         [Inject]
         private RestaurantService RestaurantService { get; set; }
         [Inject]
@@ -32,7 +32,7 @@ namespace Resaplace.Pages.RestaurantOwner
 
         protected override async Task OnInitializedAsync()
         {
-            var authState = await authenticationStateTask;
+            var authState = await AuthenticationStateTask;
             var user = authState.User;
             IdentityUser idUser = await UserManager.FindByNameAsync(user.Identity.Name);
 

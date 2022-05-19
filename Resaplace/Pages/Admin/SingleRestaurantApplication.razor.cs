@@ -47,7 +47,7 @@ namespace Resaplace.Pages.Admin
 
         private async Task AcceptApproval()
         {
-            Restaurant newRestaurant = new Restaurant()
+            Restaurant newRestaurant = new()
             {
                 Name = CurrentApplication.Name,
                 Description = CurrentApplication.Description,
