@@ -12,5 +12,6 @@ namespace Resaplace.Data.Models
         public double Price { get; set; }
         public Image Image { get; set; }
         public Restaurant Restaurant { get; set; }
+        public virtual ICollection<Reservation> Reservations { get; set; }
     }
 }
