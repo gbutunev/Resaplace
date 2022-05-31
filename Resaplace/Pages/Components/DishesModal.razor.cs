@@ -12,12 +12,13 @@ namespace Resaplace.Pages.Components
         public Action CloseModal { get; set; }
         [Parameter]
         public ReservationSubmition Reservation { get; set; }
+        [Parameter]
+        public Dictionary<Dish, int> AddedDishes { get; set; }
 
         [Inject]
         private DishService DishService { get; set; }
 
         private List<Dish> AllDishes { get; set; } = new List<Dish>();
-        private Dictionary<Dish, int> AddedDishes { get; set; } = new Dictionary<Dish, int>();
 
         protected override async Task OnParametersSetAsync()
         {

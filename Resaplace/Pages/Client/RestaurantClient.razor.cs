@@ -30,6 +30,7 @@ namespace Resaplace.Pages.Client
         private Restaurant CurrentRestaurant { get; set; }
         private bool LoggedIn { get; set; }
         private ReservationSubmition NewRes { get; set; } = new ReservationSubmition();
+        private Dictionary<Dish, int> AddedDishes { get; set; } = new Dictionary<Dish, int>();
 
         private bool ShowPeopleNum { get; set; } = false;
         private bool ShowTime { get; set; } = false;
@@ -83,9 +84,8 @@ namespace Resaplace.Pages.Client
             Console.WriteLine(SelectedHour);
         }
 
-        private void ShowDishesComponent()
-        {
-            ShowDishMenu = true;
-        }
+        private void ShowDishesComponent() => ShowDishMenu = true;
+
+        private void HideDishesComponent() => ShowDishMenu = false;
     }
 }
