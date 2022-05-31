@@ -1,4 +1,5 @@
 ﻿@page "/{Id:int}"
+@using Resaplace.Pages.Components
 @if (CurrentRestaurant != null)
 {
     <h3>@CurrentRestaurant.Name</h3>
@@ -20,5 +21,62 @@
             </p>
         </div>
 
+        @if (!LoggedIn)
+        {
+            <p>За да направите резервация, <a href="/identity/account/login">влезте в профила си</a>.</p>
+        }
+        else
+        {
+            <label for="dateselector">Дата:</label>
+            <input id="dateselector" type="date" min="@MinDate" max="@MaxDate" @onchange="OnDateChange" disabled="@DateDisabled" />
+
+            @if (ShowPeopleNum)
+            {
+                <label for="pplNum">Брой хора:</label>
+                <select name="pplNum" id="pplNum" @onchange="OnPplNumChange" disabled="@PplNumDisabled">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                </select>
+                <p>За резервации с повече хора, моля обадете се на телефона на ресторанта: @CurrentRestaurant.PhoneNumber</p>
+            }
+
+            @if (ShowTime)
+            {
+                @if (AvailableHours == null)
+                {
+                    <p>Зареждане на часовете...</p>
+                }
+                else if (AvailableHours.Count == 0)
+                {
+                    <p>Няма свободни места за избраната дата и брой души.</p>
+                }
+                else
+                {
+                    @foreach (var t in AvailableHours)
+                    {
+                        <input class="form-check-input" type="radio" id="@t" name="resHour" value="@t" @onchange="@(() => ChangeSelectedHour(t))">
+                        <label class="form-check-label" for="@t">@t</label>
+                        <br>
+                    }
+                    <button class="btn btn-primary" @onclick="@ShowDishesComponent">Добави ястия</button>
+                    <button class="btn btn-primary" @onclick="@CreateReservation">Направи резервация</button>
+                }
+            }
+        }
     </div>
+}
+
+@if (ShowDishMenu)
+{
+    <DishesModal RestaurantId=Id Reservation=NewRes />
+}
+
+@code {
+    TimeOnly timeEnd = new TimeOnly(21, 0);
 }

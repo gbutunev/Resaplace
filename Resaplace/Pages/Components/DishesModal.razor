@@ -1,0 +1,44 @@
+﻿<div class="modal bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" style="display: block">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Добавяне на ястия и напитки</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                @foreach (var d in AllDishes)
+                {
+                    <div class="card" style="width: 18rem;">
+                        <img class="card-img-top" src="/images/@d.Image.ImagePath" alt="@d.Name">
+                        <div class="card-body">
+                            <h5 class="card-title">@d.Name</h5>
+                            <p class="card-text">@d.Price</p>
+                            @*<div class="btn-group" role="group">
+                                <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                <button class="btn btn-outline-secondary" type="button">-</button>
+                                </div>
+                                <input type="text" class="form-control" placeholder="" aria-label="" aria-describedby="basic-addon1">
+                                <div class="input-group-append">
+                                <button class="btn btn-outline-secondary" type="button">+</button>
+                                </div>
+                                </div>
+                                </div>*@
+                            <div class="btn-group" role="group" aria-label="Basic example">
+                                <button type="button" class="btn btn-primary" @onclick="@(() => DecreaseDishCount(d))">-</button>
+                                <button type="button" class="btn btn-outline-primary" disabled>@(AddedDishes.ContainsKey(d) ? AddedDishes[d] : 0)</button>
+                                <button type="button" class="btn btn-primary" @onclick="@(() => IncreaseDishCount(d))">+</button>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary">Save changes</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
