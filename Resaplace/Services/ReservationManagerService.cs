@@ -39,7 +39,7 @@ namespace Resaplace.Services
                     .Reservations
                     .Where(x => x.Restaurant.Id == restaurantId)
                     .Where(x => x.PeopleNumber > 4)
-                    .Where(x => x.DateTime == timeframePeople2)
+                    .Where(x => x.DateTime >= timeframePeople2 && x.DateTime <= timeframePeople1)
                     .Sum(x => x.PeopleNumber);
                 #endregion
 
@@ -52,7 +52,7 @@ namespace Resaplace.Services
                 int amountPeople3 = dbContext
                     .Reservations
                     .Where(x => x.Restaurant.Id == restaurantId)
-                    .Where(x => x.DateTime == timeframePeople3)
+                    .Where(x => x.DateTime >= resBegin && x.DateTime <= timeframePeople3)
                     .Sum(x => x.PeopleNumber);
                 #endregion
 
@@ -70,7 +70,7 @@ namespace Resaplace.Services
                     .Reservations
                     .Where(x => x.Restaurant.Id == restaurantId)
                     .Where(x => x.PeopleNumber > 4)
-                    .Where(x => x.DateTime == timeframeTables2)
+                    .Where(x => x.DateTime >= timeframeTables2 && x.DateTime <= timeframeTables1)
                     .Count();
                 #endregion
 
@@ -83,7 +83,7 @@ namespace Resaplace.Services
                 int amountTables3 = dbContext
                     .Reservations
                     .Where(x => x.Restaurant.Id == restaurantId)
-                    .Where(x => x.DateTime == timeframeTables3)
+                    .Where(x => x.DateTime >= resBegin && x.DateTime <= timeframeTables3)
                     .Count();
                 #endregion
 
