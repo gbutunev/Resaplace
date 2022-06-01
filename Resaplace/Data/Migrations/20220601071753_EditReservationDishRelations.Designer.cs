@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Resaplace.Data;
 
@@ -11,9 +12,10 @@ using Resaplace.Data;
 namespace Resaplace.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220601071753_EditReservationDishRelations")]
+    partial class EditReservationDishRelations
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -251,7 +253,7 @@ namespace Resaplace.Data.Migrations
 
                     b.HasIndex("RestaurantId");
 
-                    b.ToTable("Dishes", (string)null);
+                    b.ToTable("Dishes");
                 });
 
             modelBuilder.Entity("Resaplace.Data.Models.Image", b =>
@@ -282,7 +284,7 @@ namespace Resaplace.Data.Migrations
 
                     b.HasIndex("RestaurantId");
 
-                    b.ToTable("Images", (string)null);
+                    b.ToTable("Images");
                 });
 
             modelBuilder.Entity("Resaplace.Data.Models.Reservation", b =>
@@ -315,7 +317,7 @@ namespace Resaplace.Data.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Reservations", (string)null);
+                    b.ToTable("Reservations");
                 });
 
             modelBuilder.Entity("Resaplace.Data.Models.ReservationDish", b =>
@@ -341,7 +343,7 @@ namespace Resaplace.Data.Migrations
 
                     b.HasIndex("ReservationId");
 
-                    b.ToTable("ReservationDishes", (string)null);
+                    b.ToTable("ReservationDishes");
                 });
 
             modelBuilder.Entity("Resaplace.Data.Models.Restaurant", b =>
@@ -390,7 +392,7 @@ namespace Resaplace.Data.Migrations
 
                     b.HasIndex("OwnerId");
 
-                    b.ToTable("Restaurants", (string)null);
+                    b.ToTable("Restaurants");
                 });
 
             modelBuilder.Entity("Resaplace.Data.Models.RestaurantApplication", b =>
@@ -445,7 +447,7 @@ namespace Resaplace.Data.Migrations
 
                     b.HasIndex("OwnerId");
 
-                    b.ToTable("RestaurantApplications", (string)null);
+                    b.ToTable("RestaurantApplications");
                 });
 
             modelBuilder.Entity("Resaplace.Data.Models.RestaurantStaff", b =>
@@ -469,7 +471,7 @@ namespace Resaplace.Data.Migrations
 
                     b.HasIndex("RestaurantId");
 
-                    b.ToTable("RestaurantStaff", (string)null);
+                    b.ToTable("RestaurantStaff");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

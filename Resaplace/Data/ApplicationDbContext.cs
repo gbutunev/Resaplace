@@ -23,5 +23,6 @@ namespace Resaplace.Data
         public DbSet<Dish> Dishes { get; set; }
         public DbSet<Reservation> Reservations { get; set; }
         public DbSet<RestaurantStaff> RestaurantStaff { get; set; }
+        public DbSet<ReservationDish> ReservationDishes { get; set; }
     }
 }

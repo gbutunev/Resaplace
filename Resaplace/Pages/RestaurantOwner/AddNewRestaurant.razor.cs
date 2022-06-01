@@ -104,7 +104,7 @@ namespace Resaplace.Pages.RestaurantOwner
                 ToastService.ShowError("Трябва да бъдат качени 3 снимки!");
             }
         }
-
+        //TODO: Check for duplicate names
         //Showing and hiding element clears the uploaded files
         //TODO: Find a better solution
         private void ClearInputFile()

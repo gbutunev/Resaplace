@@ -106,16 +106,17 @@ namespace Resaplace.Pages.Client
             NewRes.User = idUser;
             NewRes.DateTime = new(SelectedDate.Year, SelectedDate.Month, SelectedDate.Day, SelectedHour.Hour, SelectedHour.Minute, 0);
             NewRes.PeopleNumber = SelectedPplNum;
-            NewRes.Dishes = new List<Dish>();
+            NewRes.ReservationDishes = new List<ReservationDish>();
             NewRes.Restaurant = CurrentRestaurant;
             //TODO: NewRes.Message 
-
+            //TODO: Add reservation status
             foreach (var kv in AddedDishes)
             {
-                for (int i = 0; i < kv.Value; i++)
+                NewRes.ReservationDishes.Add(new ReservationDish
                 {
-                    NewRes.Dishes.Add(kv.Key);
-                }
+                    Dish = kv.Key,
+                    Amount = kv.Value,
+                });
             }
 
             if (await ReservationService.InsertReservationAsync(NewRes))
