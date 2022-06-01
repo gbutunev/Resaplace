@@ -72,9 +72,27 @@
     </div>
 }
 
+@if (AddedDishes.Count != 0)
+{
+    <div class="card" style="width: 18rem;">
+        <div class="card-header">
+            Поръчка към резервацията
+        </div>
+        <ul class="list-group list-group-flush">
+            @foreach (var kv in AddedDishes)
+            {
+                <li class="list-group-item">@(kv.Value)x @kv.Key.Name</li>
+            }
+        </ul>
+        <div class="card-footer">
+            Общо към сметката: @TotalDishPrice
+        </div>
+    </div>
+}
+
 @if (ShowDishMenu)
 {
-    <DishesModal RestaurantId=Id Reservation=NewRes AddedDishes=AddedDishes CloseModal=HideDishesComponent/>
+    <DishesModal RestaurantId=Id Reservation=NewRes AddedDishes=AddedDishes CloseModal=HideDishesComponent />
 }
 
 @code {

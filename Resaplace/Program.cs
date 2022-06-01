@@ -38,6 +38,7 @@ builder.Services.AddScoped<RestaurantService>();
 builder.Services.AddScoped<OwnershipCheckService>();
 builder.Services.AddScoped<DishService>();
 builder.Services.AddScoped<ReservationManagerService>();
+builder.Services.AddScoped<ReservationService>();
 
 var app = builder.Build();
 

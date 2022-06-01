@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Components;
+﻿using Blazored.Toast.Services;
+using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Resaplace.Data.Models;
 using Resaplace.Services;
 
@@ -20,17 +22,36 @@ namespace Resaplace.Pages.Client
         private RestaurantService RestaurantService { get; set; }
         [Inject]
         private ReservationManagerService ReservationManager { get; set; }
+        [Inject]
+        private ReservationService ReservationService { get; set; }
         #endregion
 
         #region General Services
         [Inject]
         private NavigationManager NavigationManager { get; set; }
+        [Inject]
+        private UserManager<IdentityUser> UserManager { get; set; }
+        [Inject]
+        private IToastService ToastService { get; set; }
         #endregion
 
         private Restaurant CurrentRestaurant { get; set; }
         private bool LoggedIn { get; set; }
-        private ReservationSubmition NewRes { get; set; } = new ReservationSubmition();
+        private Reservation NewRes { get; set; } = new Reservation();
         private Dictionary<Dish, int> AddedDishes { get; set; } = new Dictionary<Dish, int>();
+        private double TotalDishPrice
+        {
+            get
+            {
+                double sum = 0;
+                foreach (var kv in AddedDishes)
+                {
+                    sum += kv.Value * kv.Key.Price;
+                }
+
+                return sum;
+            }
+        }
 
         private bool ShowPeopleNum { get; set; } = false;
         private bool ShowTime { get; set; } = false;
@@ -68,7 +89,7 @@ namespace Resaplace.Pages.Client
             ShowTime = true;
 
             AvailableHours = ReservationManager.GetAvailableHours(Id, SelectedDate, SelectedPplNum);
-            NewRes.GuestNumber = SelectedPplNum;
+            NewRes.PeopleNumber = SelectedPplNum;
         }
 
         private void ChangeSelectedHour(TimeOnly t)
@@ -76,12 +97,32 @@ namespace Resaplace.Pages.Client
             SelectedHour = t;
         }
 
-        private void CreateReservation()
+        private async Task CreateReservation()
         {
-            Console.WriteLine(CurrentRestaurant.Name);
-            Console.WriteLine(SelectedDate);
-            Console.WriteLine(SelectedPplNum);
-            Console.WriteLine(SelectedHour);
+            var authState = await AuthenticationStateTask;
+            var user = authState.User;
+            IdentityUser idUser = await UserManager.FindByNameAsync(user.Identity.Name);
+
+            NewRes.User = idUser;
+            NewRes.DateTime = new(SelectedDate.Year, SelectedDate.Month, SelectedDate.Day, SelectedHour.Hour, SelectedHour.Minute, 0);
+            NewRes.PeopleNumber = SelectedPplNum;
+            NewRes.Dishes = new List<Dish>();
+            NewRes.Restaurant = CurrentRestaurant;
+            //TODO: NewRes.Message 
+
+            foreach (var kv in AddedDishes)
+            {
+                for (int i = 0; i < kv.Value; i++)
+                {
+                    NewRes.Dishes.Add(kv.Key);
+                }
+            }
+
+            if (await ReservationService.InsertReservationAsync(NewRes))
+            {
+                ToastService.ShowSuccess("Резервацията е успешно създадена!");
+                NavigationManager.NavigateTo("/");
+            }
         }
 
         private void ShowDishesComponent() => ShowDishMenu = true;

@@ -11,7 +11,7 @@ namespace Resaplace.Pages.Components
         [Parameter]
         public Action CloseModal { get; set; }
         [Parameter]
-        public ReservationSubmition Reservation { get; set; }
+        public Reservation Reservation { get; set; }
         [Parameter]
         public Dictionary<Dish, int> AddedDishes { get; set; }
 
@@ -36,7 +36,7 @@ namespace Resaplace.Pages.Components
         {
             if (AddedDishes.ContainsKey(d))
             {
-                if (AddedDishes[d] < Reservation.GuestNumber) AddedDishes[d]++;
+                if (AddedDishes[d] < Reservation.PeopleNumber) AddedDishes[d]++;
             }
             else
             {
