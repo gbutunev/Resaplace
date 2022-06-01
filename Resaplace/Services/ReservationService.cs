@@ -1,4 +1,6 @@
-﻿using Resaplace.Data;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using Resaplace.Data;
 using Resaplace.Data.Models;
 
 namespace Resaplace.Services
@@ -16,6 +18,23 @@ namespace Resaplace.Services
         {
             await dbContext.Reservations.AddAsync(res);
             await dbContext.SaveChangesAsync();
+            return true;
+        }
+
+        public async Task<List<Reservation>> GetReservationsByUser(IdentityUser idUser)
+        {
+            return await dbContext
+                .Reservations
+                .Where(x => x.User == idUser)
+                .Include(x => x.ReservationDishes)
+                .Include(x => x.Restaurant)
+                .ToListAsync();
+        }
+
+        internal bool DeleteReservation(Reservation res)
+        {
+            dbContext.Reservations.Remove(res);
+            dbContext.SaveChanges();
             return true;
         }
     }

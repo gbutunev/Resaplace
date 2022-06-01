@@ -1,0 +1,53 @@
+﻿@page "/myreservations"
+@attribute [Authorize]
+
+<h3>Моите резервации</h3>
+
+@foreach (var res in Reservations)
+{
+    <div class="container border rounded mb-5 p-3">
+        <h4>@res.Restaurant.Name</h4>
+        <h5>@res.Restaurant.City, @res.Restaurant.StreetAddress</h5>
+        <div>
+            <p>@res.DateTime</p>
+            <p>@res.PeopleNumber</p>
+        </div>
+        @if (res.ReservationDishes.Count != 0)
+        {
+            <table class="table">
+                <tbody>
+                    @foreach (var d in res.ReservationDishes)
+                    {
+                        <tr>
+                            <th scope="row">@d.Dish.Name</th>
+                            <td>x@(d.Amount)</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+
+        <button type="button" class="btn btn-danger" @onclick="@(()=>ShowDeletePopup(res))">Изтриване на резе</button>
+    </div>
+}
+
+@if (DeleteReservationPopup)
+{
+    <div class="modal" tabindex="-1" role="dialog" style="display: block">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Изтриване на резервация в @ReservationToBeDeleted.Restaurant.Name</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" @onclick="@CancelDeletion"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Сигурни ли сте, че искате да изтриете Вашата резервация в ресторант @ReservationToBeDeleted.Restaurant.Name?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" @onclick="@CancelDeletion">Не</button>
+                    <button type="button" class="btn btn-success" @onclick="@AcceptDeletion">Да</button>
+                </div>
+            </div>
+        </div>
+    </div>
+}
