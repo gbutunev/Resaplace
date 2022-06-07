@@ -7,16 +7,63 @@
 @foreach (var r in ReservationsToday)
 {
     <div>
-        @r.DateTime.Hour:@r.DateTime.Minute
+        data - @r.DateTime.Hour:@r.DateTime.Minute
         <br>
-        @r.Message
+        message - @r.Message
         <br>
-        @r.PeopleNumber
+        hora - @r.PeopleNumber
         <br>
-        @r.User.Email
+        mail - @r.User.Email
         <br>
-        @r.User.UserName
+        user - @r.User.UserName
         <br>
-        @r.ReservationDishes.Count
+        qdeneta - @r.ReservationDishes.Count
+        <br>
+        status - @r.ReservationStatus
+        <br>
+        <button @onclick=@(() => ShowAccept(r))>Priemi</button>
+        <button @onclick=@(() => ShowDecline(r))>otkaji</button>
+    </div>
+}
+
+@if (ShowAcceptPopup)
+{
+    <div class="modal" tabindex="-1" role="dialog" style="display: block">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Приемане на резервация</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" @onclick="@CancelAccept"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Сигурни ли сте, че искате да приемете резервацията на @SelectedReservation.User.UserName за @SelectedReservation.DateTime?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" @onclick="@CancelAccept">Не</button>
+                    <button type="button" class="btn btn-success" @onclick="@AcceptAccept">Да</button>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@if (ShowDeclinePopup)
+{
+    <div class="modal" tabindex="-1" role="dialog" style="display: block">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Отказване на резервация</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" @onclick="@CancelDecline"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Сигурни ли сте, че искате да приемете резервацията на @SelectedReservation.User.UserName за @SelectedReservation.DateTime?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" @onclick="@CancelDecline">Не</button>
+                    <button type="button" class="btn btn-success" @onclick="@AcceptDecline">Да</button>
+                </div>
+            </div>
+        </div>
     </div>
 }

@@ -16,6 +16,8 @@ namespace Resaplace.Services
 
         public async Task<bool> InsertReservationAsync(Reservation res)
         {
+            res.ReservationStatus = BasicStatus.Pending;
+
             await dbContext.Reservations.AddAsync(res);
             await dbContext.SaveChangesAsync();
             return true;
@@ -40,10 +42,17 @@ namespace Resaplace.Services
                 .Include(x => x.ReservationDishes)
                 .ToListAsync();
         }
-        public bool DeleteReservation(Reservation res)
+        public async Task<bool> DeleteReservation(Reservation res)
         {
             dbContext.Reservations.Remove(res);
-            dbContext.SaveChanges();
+            await dbContext.SaveChangesAsync();
+            return true;
+        }
+
+        public async Task<bool> SetReservationStatus(Reservation res, BasicStatus status)
+        {
+            res.ReservationStatus = status;
+            await dbContext.SaveChangesAsync();
             return true;
         }
     }

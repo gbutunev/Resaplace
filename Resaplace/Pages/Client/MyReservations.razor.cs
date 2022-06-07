@@ -48,7 +48,7 @@ namespace Resaplace.Pages.Client
 
         private async Task AcceptDeletion()
         {
-            ReservationService.DeleteReservation(ReservationToBeDeleted);
+            await ReservationService.DeleteReservation(ReservationToBeDeleted);
             ToastService.ShowInfo($"Резервацията в {ReservationToBeDeleted.Restaurant.Name} е изтрита успешно!");
             DeleteReservationPopup = false;
             ReservationToBeDeleted = null;

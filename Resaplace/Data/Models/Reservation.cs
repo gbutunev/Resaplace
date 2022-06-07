@@ -18,5 +18,6 @@ namespace Resaplace.Data.Models
         public Restaurant Restaurant { get; set; }
         public string Message { get; set; }
         public virtual ICollection<ReservationDish> ReservationDishes { get; set; }
+        public BasicStatus ReservationStatus { get; set; }
     }
 }

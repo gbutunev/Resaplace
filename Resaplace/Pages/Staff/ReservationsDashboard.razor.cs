@@ -27,6 +27,9 @@ namespace Resaplace.Pages.Staff
 
         private Restaurant CurrentRestaurant { get; set; } = new Restaurant();
         private List<Reservation> ReservationsToday { get; set; } = new List<Reservation>();
+        private Reservation SelectedReservation { get; set; } = null;
+        private bool ShowAcceptPopup { get; set; }
+        private bool ShowDeclinePopup { get; set; }
 
         protected override async Task OnParametersSetAsync()
         {
@@ -40,6 +43,46 @@ namespace Resaplace.Pages.Staff
 
             ReservationsToday = await ReservationService
                 .GetReservationsByRestaurantAndDate(CurrentRestaurant, DateTime.Today);
+        }
+
+        private void ShowAccept(Reservation r)
+        {
+            SelectedReservation = r;
+            ShowAcceptPopup = true;
+        }
+
+        private void ShowDecline(Reservation r)
+        {
+            SelectedReservation = r;
+            ShowDeclinePopup = true;
+        }
+
+        private void CancelAccept()
+        {
+            SelectedReservation = null;
+            ShowAcceptPopup = false;
+        }
+
+        private void CancelDecline()
+        {
+            SelectedReservation = null;
+            ShowDeclinePopup = false;
+        }
+
+        private async Task AcceptAccept()
+        {
+            await ReservationService.SetReservationStatus(SelectedReservation, BasicStatus.Accepted);
+            SelectedReservation = null;
+            ShowAcceptPopup = false;
+            StateHasChanged();
+        }
+
+        private async Task AcceptDecline()
+        {
+            await ReservationService.SetReservationStatus(SelectedReservation, BasicStatus.Declined);
+            SelectedReservation = null;
+            ShowDeclinePopup = false;
+            StateHasChanged();
         }
     }
 }
