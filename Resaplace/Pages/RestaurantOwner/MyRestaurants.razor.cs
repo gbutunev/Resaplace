@@ -43,6 +43,10 @@ namespace Resaplace.Pages.RestaurantOwner
             NavManager.NavigateTo($"/myrestaurants/{restaurantId}/dishes/");
         }
 
+        private void NavigateToStaff(int restaurantId)
+        {
+            NavManager.NavigateTo($"/myrestaurants/{restaurantId}/staffmembers/");
+        }
         private void ShowDeletePopup(Restaurant restaurant)
         {
             RestaurantToBeDeleted = restaurant;

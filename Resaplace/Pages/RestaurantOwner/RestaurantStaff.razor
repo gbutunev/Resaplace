@@ -1,0 +1,65 @@
+﻿@page "/myrestaurants/{Id:int}/staffmembers"
+<h3>Служители в @CurrentRestaurant.Name</h3>
+
+<input type="email" class="form-control" aria-describedby="emailHelp" placeholder="E-mail на служител" @bind=@InputField>
+<button class="btn btn-primary" @onclick=@ShowAddStaffModal>Добави</button>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">E-mail</th>
+            <th scope="col">Опции</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var u in StaffMembers)
+        {
+            <tr>
+                <td>@(u.Email)</td>
+                <td><button class="btn btn-danger" @onclick=@(() => DeleteStaffMember(u))>Премахни</button></td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@if (DeleteStaffPopup)
+{
+    <div class="modal" tabindex="-1" role="dialog" style="display: block">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Премахване на служител</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" @onclick="@CancelDeletion"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Сигурни ли сте, че искате да премахнете служител @(StaffToBeDeleted.UserName)?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" @onclick="@CancelDeletion">Не</button>
+                    <button type="button" class="btn btn-danger" @onclick="@AcceptDeletion">Да</button>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@if (AddStaffPopup)
+{
+    <div class="modal" tabindex="-1" role="dialog" style="display: block">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Добавяне на служител</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" @onclick="@HideStaffPopup"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Сигурни ли сте, че искате да добавите служител с имейл @InputField към ресторант @CurrentRestaurant.Name</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" @onclick="@HideStaffPopup">Не</button>
+                    <button type="button" class="btn btn-success" @onclick="@AddStaffMember">Да</button>
+                </div>
+            </div>
+        </div>
+    </div>
+}
