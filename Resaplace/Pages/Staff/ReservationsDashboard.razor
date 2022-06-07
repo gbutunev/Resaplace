@@ -1,0 +1,6 @@
+﻿@page "/dashboard/{Id:int}"
+@attribute [Authorize(Roles = "Staff")]
+
+<h3>Управление на резервации</h3>
+<h4>Ресторант @CurrentRestaurant.Name</h4>
+

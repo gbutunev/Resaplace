@@ -75,11 +75,10 @@ namespace Resaplace.Services
 
         public async Task<bool> ContainsStaffMember(IdentityUser user, Restaurant restaurant)
         {
-            return await dbContext.RestaurantStaff.ContainsAsync(new RestaurantStaff
-            {
-                Person = user,
-                Restaurant = restaurant
-            });
+            var row = await dbContext.RestaurantStaff.Where(x => x.Person == user && x.Restaurant == restaurant).FirstOrDefaultAsync();
+            
+            if (row == null) return false;
+            else return true;
         }
     }
 }
