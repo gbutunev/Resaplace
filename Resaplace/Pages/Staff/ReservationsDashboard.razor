@@ -4,3 +4,19 @@
 <h3>Управление на резервации</h3>
 <h4>Ресторант @CurrentRestaurant.Name</h4>
 
+@foreach (var r in ReservationsToday)
+{
+    <div>
+        @r.DateTime.Hour:@r.DateTime.Minute
+        <br>
+        @r.Message
+        <br>
+        @r.PeopleNumber
+        <br>
+        @r.User.Email
+        <br>
+        @r.User.UserName
+        <br>
+        @r.ReservationDishes.Count
+    </div>
+}

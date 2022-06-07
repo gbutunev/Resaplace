@@ -15,40 +15,55 @@
             </NavLink>
         </div>
         @*User*@
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="myreservations">
-                <span class="oi oi-list-rich" aria-hidden="true"></span> Моите резервации
-            </NavLink>
-        </div>
+        <AuthorizeView>
+            <div class="nav-item px-3">
+                <NavLink class="nav-link" href="myreservations">
+                    <span class="oi oi-list-rich" aria-hidden="true"></span> Моите резервации
+                </NavLink>
+            </div>
+        </AuthorizeView>
 
         @*Restaurant Owner*@
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="newrestaurant">
-                <span class="oi oi-plus" aria-hidden="true"></span> Нов Ресторант
-            </NavLink>
-        </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="myrestaurantapplications">
-                <span class="oi oi-clipboard" aria-hidden="true"></span> Моите Заявки
-            </NavLink>
-        </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="myrestaurants">
-                <span class="oi oi-spreadsheet" aria-hidden="true"></span> Моите Ресторанти
-            </NavLink>
-        </div>
+        <AuthorizeView>
+            <div class="nav-item px-3">
+                <NavLink class="nav-link" href="newrestaurant">
+                    <span class="oi oi-plus" aria-hidden="true"></span> Нов Ресторант
+                </NavLink>
+            </div>
+            <div class="nav-item px-3">
+                <NavLink class="nav-link" href="myrestaurantapplications">
+                    <span class="oi oi-clipboard" aria-hidden="true"></span> Моите Заявки
+                </NavLink>
+            </div>
+            <div class="nav-item px-3">
+                <NavLink class="nav-link" href="myrestaurants">
+                    <span class="oi oi-spreadsheet" aria-hidden="true"></span> Моите Ресторанти
+                </NavLink>
+            </div>
+        </AuthorizeView>
 
         @*Admin*@
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="restaurantapplications">
-                <span class="oi oi-list-rich" aria-hidden="true"></span> Заявки - Ресторанти
-            </NavLink>
-        </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="restaurants">
-                <span class="oi oi-list-rich" aria-hidden="true"></span> Всички Ресторанти
-            </NavLink>
-        </div>
+        <AuthorizeView>
+            <div class="nav-item px-3">
+                <NavLink class="nav-link" href="restaurantapplications">
+                    <span class="oi oi-list-rich" aria-hidden="true"></span> Заявки - Ресторанти
+                </NavLink>
+            </div>
+            <div class="nav-item px-3">
+                <NavLink class="nav-link" href="restaurants">
+                    <span class="oi oi-list-rich" aria-hidden="true"></span> Всички Ресторанти
+                </NavLink>
+            </div>
+        </AuthorizeView>
+
+        @*Staff*@
+        <AuthorizeView Roles="Staff">
+            <div class="nav-item px-3">
+                <NavLink class="nav-link" href="dashboard">
+                    <span class="oi oi-list-rich" aria-hidden="true"></span> Ресторанти
+                </NavLink>
+            </div>
+        </AuthorizeView>
     </nav>
 </div>
 

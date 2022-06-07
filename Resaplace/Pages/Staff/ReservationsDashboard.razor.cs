@@ -22,8 +22,11 @@ namespace Resaplace.Pages.Staff
         private RestaurantService RestaurantService { get; set; }
         [Inject]
         private NavigationManager NavManager { get; set; }
+        [Inject]
+        private ReservationService ReservationService { get; set; }
 
-        private Restaurant CurrentRestaurant { get; set; } = null;
+        private Restaurant CurrentRestaurant { get; set; } = new Restaurant();
+        private List<Reservation> ReservationsToday { get; set; } = new List<Reservation>();
 
         protected override async Task OnParametersSetAsync()
         {
@@ -34,6 +37,9 @@ namespace Resaplace.Pages.Staff
 
             bool userIsStaff = await StaffService.ContainsStaffMember(idUser, CurrentRestaurant);
             if (!userIsStaff) NavManager.NavigateTo("/");
+
+            ReservationsToday = await ReservationService
+                .GetReservationsByRestaurantAndDate(CurrentRestaurant, DateTime.Today);
         }
     }
 }

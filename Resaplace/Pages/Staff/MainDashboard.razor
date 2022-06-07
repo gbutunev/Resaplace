@@ -1,0 +1,8 @@
+﻿@page "/dashboard"
+@attribute [Authorize(Roles = "Staff")]
+<h3>MainDashboard</h3>
+
+@foreach (var r in Restaurants)
+{
+    <a href="/dashboard/@r.Id">@r.Name - @r.City - @r.StreetAddress</a>
+}

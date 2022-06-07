@@ -31,7 +31,16 @@ namespace Resaplace.Services
                 .ToListAsync();
         }
 
-        internal bool DeleteReservation(Reservation res)
+        public async Task<List<Reservation>> GetReservationsByRestaurantAndDate(Restaurant restaurant, DateTime date)
+        {
+            return await dbContext
+                .Reservations
+                .Where(x => x.Restaurant == restaurant)
+                .Where(x => x.DateTime.Date == date.Date)
+                .Include(x => x.ReservationDishes)
+                .ToListAsync();
+        }
+        public bool DeleteReservation(Reservation res)
         {
             dbContext.Reservations.Remove(res);
             dbContext.SaveChanges();
