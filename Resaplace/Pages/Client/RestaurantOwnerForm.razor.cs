@@ -1,6 +1,9 @@
 ﻿using Blazored.Toast.Services;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Resaplace.Data.Models;
+using Resaplace.Services;
 using RestSharp;
 using System.Text;
 
@@ -11,16 +14,50 @@ namespace Resaplace.Pages.Client
         //private readonly string _trBaseUri = "https://sova.bg/";
         //private readonly string _trSearchUri = "api/v1/com/search/search_input.do";
         //private readonly string _trSearchBodyRaw = @"{""api_ver"":0.057,""timeout"":652476588,""params"":{""term"":""121699202""}}";
+        //[Inject]
+        //private IHttpClientFactory ClientFactory { get; set; }
+        //private HttpClient Client { get; set; }
+        [CascadingParameter]
+        private Task<AuthenticationState> AuthenticationStateTask { get; set; }
+
         [Inject]
         private IToastService ToastService { get; set; }
         [Inject]
-        //private IHttpClientFactory ClientFactory { get; set; }
+        private OwnerApplicationService ApplicationService { get; set; }
+        [Inject]
+        private UserManager<IdentityUser> UserManager { get; set; }
+        [Inject]
+        private NavigationManager NavigationManager { get; set; }
 
         private FormOwnerApplication Model { get; set; } = new FormOwnerApplication();
-        //private HttpClient Client { get; set; }
+        private bool canApply = true;
+        private OwnerApplication LastApplication { get; set; }
+        private IdentityUser CurrentUser { get; set; }
         protected override async Task OnInitializedAsync()
         {
             //Client = ClientFactory.CreateClient();
+
+            var authState = await AuthenticationStateTask;
+            var user = authState.User;
+            CurrentUser = await UserManager.FindByNameAsync(user.Identity.Name);
+
+            var lastApplication = await ApplicationService.GetLastApplicationByUserAsync(CurrentUser);
+            if (lastApplication == null)
+            {
+                canApply = true;
+            }
+            else
+            {
+                if (lastApplication.ApplicationStatus == BasicStatus.Declined)
+                {
+                    canApply = true;
+                }
+                else //pending or accepted
+                {
+                    LastApplication = lastApplication;
+                    canApply = false;
+                }
+            }
         }
 
         //private async Task CheckEik()
@@ -37,9 +74,29 @@ namespace Resaplace.Pages.Client
         //    ToastService.ShowInfo(response.Content);
         //}
 
-        private void ShowConfirmation()
+        private async Task ShowConfirmation()
         {
-            ToastService.ShowWarning(Model.EIK);
+            OwnerApplication newApplication = new OwnerApplication
+            {
+                FirstName = Model.FirstName.Trim(),
+                MiddleName = Model.MiddleName == null ? String.Empty : Model.MiddleName.Trim(),
+                LastName = Model.LastName.Trim(),
+                Address = Model.Address.Trim(),
+                City = Model.City.Trim(),
+                Municipality = Model.Municipality.Trim(),
+                Region = Model.Region.Trim(),
+                CompanyName = Model.CompanyName.Trim(),
+                EIK = Model.EIK.Trim(),
+                User = CurrentUser,
+                CreatedOn = DateTime.Now,
+                ApplicationStatus = BasicStatus.Pending
+            };
+
+            await ApplicationService.CreateApplicationAsync(newApplication);
+
+            Model = new FormOwnerApplication();
+            ToastService.ShowSuccess("Вашата заявка беше изпратена!");
+            NavigationManager.NavigateTo("/");
         }
     }
 }

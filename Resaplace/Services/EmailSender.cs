@@ -32,7 +32,7 @@ namespace Resaplace.Services
             var client = new SendGridClient(apiKey);
             var msg = new SendGridMessage()
             {
-                From = new EmailAddress("resaplace@abv.bg", "Resaplace"),
+                From = new EmailAddress("verify@resaplace.ga", "Resaplace"),
                 Subject = subject,
                 PlainTextContent = message,
                 HtmlContent = message
