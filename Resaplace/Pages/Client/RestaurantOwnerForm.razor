@@ -1,0 +1,54 @@
+﻿@page "/applyasowner"
+@attribute [Authorize]
+
+<h3>Подаване на заявка за собственик на ресторант</h3>
+
+<EditForm Model="@Model" OnValidSubmit="@ShowConfirmation">
+    <DataAnnotationsValidator />
+    <div class="mb-3">
+        <label for="f-name" class="form-label">Име</label>
+        <InputText @bind-Value="Model.FirstName" id="f-name" class="form-control" />
+    </div>
+    <div class="mb-3">
+        <label for="m-name" class="form-label">Презиме</label>
+        <InputText @bind-Value="Model.MiddleName" id="m-name" class="form-control" />
+    </div>
+    <div class="mb-3">
+        <label for="l-name" class="form-label">Фамилия</label>
+        <InputText @bind-Value="Model.LastName" id="l-name" class="form-control" />
+    </div>
+
+    <label for="eik" class="form-label">ЕИК</label>
+    <div class="input-group mb-3">
+        <InputText @bind-Value="Model.EIK" id="eik" class="form-control" />
+@*        <div class="input-group-append">
+            <button @onclick=@CheckEik class="btn btn-info">Провери ЕИК</button>
+        </div>*@
+    </div>
+
+
+    <div class="mb-3">
+        <label for="name" class="form-label">Наименование на фирмата</label>
+        <InputText @bind-Value="Model.CompanyName" id="name" class="form-control" />
+    </div>
+    <div class="mb-3">
+        <label for="cit" class="form-label">Град</label>
+        <InputText @bind-Value="Model.City" id="cit" class="form-control" />
+    </div>
+    <div class="mb-3">
+        <label for="mun" class="form-label">Община</label>
+        <InputText @bind-Value="Model.Municipality" id="mun" class="form-control" />
+    </div>
+    <div class="mb-3">
+        <label for="reg" class="form-label">Област</label>
+        <InputText @bind-Value="Model.Region" id="reg" class="form-control" />
+    </div>
+    <div class="mb-3">
+        <label for="addr" class="form-label">Адрес</label>
+        <InputText @bind-Value="Model.Address" id="addr" class="form-control" />
+    </div>
+
+    <button type="submit" class="btn btn-success">Изпращане</button>
+
+    <ValidationSummary class="form-text" />
+</EditForm>

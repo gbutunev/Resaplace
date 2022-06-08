@@ -45,6 +45,8 @@ builder.Services.AddScoped<ReservationManagerService>();
 builder.Services.AddScoped<ReservationService>();
 builder.Services.AddScoped<RestaurantStaffService>();
 
+builder.Services.AddHttpClient();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

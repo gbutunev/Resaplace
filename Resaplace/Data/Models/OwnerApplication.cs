@@ -1,10 +1,11 @@
-﻿
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Resaplace.Data.Models
 {
-    public class Owner
+    //Not inherited from <Owner> class because it merges this table with ownerstable
+    public class OwnerApplication
     {
         [Key]
         public int Id { get; set; }
@@ -28,6 +29,9 @@ namespace Resaplace.Data.Models
         public string Address { get; set; }
         [Required]
         public IdentityUser User { get; set; }
-
+        [Required]
+        public BasicStatus ApplicationStatus { get; set; }
+        [Required]
+        public DateTime CreatedOn { get; set; }
     }
 }
