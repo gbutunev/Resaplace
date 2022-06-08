@@ -45,6 +45,7 @@ builder.Services.AddScoped<ReservationManagerService>();
 builder.Services.AddScoped<ReservationService>();
 builder.Services.AddScoped<RestaurantStaffService>();
 builder.Services.AddScoped<OwnerApplicationService>();
+builder.Services.AddScoped<OwnerService>();
 
 builder.Services.AddHttpClient();
 

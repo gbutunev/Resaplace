@@ -29,5 +29,22 @@ namespace Resaplace.Services
                 .AddAsync(application);
             await dbContext.SaveChangesAsync();
         }
+
+        public async Task<List<OwnerApplication>> GetApplicationsByStatusAsync(BasicStatus status)
+        {
+            return await dbContext
+                .OwnerApplications
+                .Where(x => x.ApplicationStatus == status)
+                .OrderBy(x => x.CreatedOn)
+                .Include(x => x.User)
+                .ToListAsync();
+        }
+
+        public async Task UpdateApplicationStatusAsync(OwnerApplication currentApplication, BasicStatus status)
+        {
+            currentApplication.ApplicationStatus = status;
+            dbContext.OwnerApplications.Update(currentApplication);
+            await dbContext.SaveChangesAsync();
+        }
     }
 }

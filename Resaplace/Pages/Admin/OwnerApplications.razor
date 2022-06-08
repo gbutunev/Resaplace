@@ -1,3 +1,65 @@
 ﻿@page "/ownerapplications"
+@attribute [Authorize]
+
 <h3>Заявки за собственик</h3>
 
+@foreach (var appl in PendingApplications)
+{
+    <div>
+        <p>@appl.User.UserName</p>
+        <p>@appl.FirstName</p>
+        <p>@appl.MiddleName</p>
+        <p>@appl.LastName</p>
+        <p>@appl.Address</p>
+        <p>@appl.City</p>
+        <p>@appl.Municipality</p>
+        <p>@appl.Region</p>
+        <p>@appl.CompanyName</p>
+        <p>@appl.EIK</p>
+
+        <button @onclick=@(() => ShowAccept(appl))>Приеми</button>
+        <button @onclick=@(() => ShowDecline(appl))>Откажи</button>
+    </div>
+}
+
+@if (ShowAcceptPopup)
+{
+    <div class="modal" tabindex="-1" role="dialog" style="display: block">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Одобряване на заявка</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" @onclick="@CancelAccept"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Сигурни ли сте, че искате да одобрите кандидатурата на @CurrentApplication.FirstName @CurrentApplication.MiddleName @CurrentApplication.LastName?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" @onclick="@CancelAccept">Не</button>
+                    <button type="button" class="btn btn-success" @onclick="@AcceptAccept">Да</button>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@if (ShowDeclinePopup)
+{
+    <div class="modal" tabindex="-1" role="dialog" style="display: block">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Отказване на резервация</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" @onclick="@CancelDecline"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Сигурни ли сте, че искате да откажете кандидатурата на @CurrentApplication.FirstName @CurrentApplication.MiddleName @CurrentApplication.LastName?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" @onclick="@CancelDecline">Не</button>
+                    <button type="button" class="btn btn-success" @onclick="@AcceptDecline">Да</button>
+                </div>
+            </div>
+        </div>
+    </div>
+}
