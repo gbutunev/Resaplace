@@ -43,7 +43,12 @@
         </AuthorizeView>
 
         @*Admin*@
-        <AuthorizeView>
+        <AuthorizeView Roles="Admin">
+            <div class="nav-item px-3">
+                <NavLink class="nav-link" href="ownerapplications">
+                    <span class="oi oi-list-rich" aria-hidden="true"></span> Заявки - Партньори
+                </NavLink>
+            </div>
             <div class="nav-item px-3">
                 <NavLink class="nav-link" href="restaurantapplications">
                     <span class="oi oi-list-rich" aria-hidden="true"></span> Заявки - Ресторанти
