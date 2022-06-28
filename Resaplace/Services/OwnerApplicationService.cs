@@ -18,6 +18,7 @@ namespace Resaplace.Services
         {
             return await dbContext
                 .OwnerApplications
+                .Where(x => x.User == user)
                 .OrderByDescending(x => x.CreatedOn)
                 .FirstOrDefaultAsync();
         }

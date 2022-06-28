@@ -31,7 +31,7 @@ namespace Resaplace.Pages.Client
 
         private FormOwnerApplication Model { get; set; } = new FormOwnerApplication();
         private bool canApply = true;
-        private OwnerApplication LastApplication { get; set; }
+        private BasicStatus pageStatus;
         private IdentityUser CurrentUser { get; set; }
         protected override async Task OnInitializedAsync()
         {
@@ -44,19 +44,11 @@ namespace Resaplace.Pages.Client
             var lastApplication = await ApplicationService.GetLastApplicationByUserAsync(CurrentUser);
             if (lastApplication == null)
             {
-                canApply = true;
+                pageStatus = BasicStatus.Declined;
             }
             else
             {
-                if (lastApplication.ApplicationStatus == BasicStatus.Declined)
-                {
-                    canApply = true;
-                }
-                else //pending or accepted
-                {
-                    LastApplication = lastApplication;
-                    canApply = false;
-                }
+                pageStatus = lastApplication.ApplicationStatus;
             }
         }
 

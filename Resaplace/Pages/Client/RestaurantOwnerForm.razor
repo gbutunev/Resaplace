@@ -1,8 +1,10 @@
 ﻿@page "/applyasowner"
+@using Resaplace.Data.Models
 @attribute [Authorize]
 
 <h3>Подаване на заявка за собственик на ресторант</h3>
-@if (canApply)
+
+@if (pageStatus == BasicStatus.Declined)
 {
     <EditForm Model="@Model" OnValidSubmit="@ShowConfirmation">
         <DataAnnotationsValidator />
@@ -54,14 +56,11 @@
         <ValidationSummary class="form-text" />
     </EditForm>
 }
+else if (pageStatus == BasicStatus.Pending)
+{
+    <p>Вашата заявка все още не е обработена.</p>
+}
 else
 {
-    @if (LastApplication.ApplicationStatus == Data.Models.BasicStatus.Pending)
-    {
-        <p>Вашата заявка все още не е обработена.</p>
-    }
-    else
-    {
-        <p>Вашият акаунт вече е с права на собственик.</p>
-    }
+    <p>Вашият акаунт вече е с права на собственик.</p>
 }
