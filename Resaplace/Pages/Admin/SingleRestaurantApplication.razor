@@ -1,5 +1,5 @@
 ﻿@page "/restaurantapplications/{Id:int}"
-@attribute [Authorize]
+@attribute [Authorize(Roles = "Admin")]
 
 <h3>Детайли</h3>
 @if (CurrentApplication == null)

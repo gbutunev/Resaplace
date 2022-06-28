@@ -1,4 +1,5 @@
 ﻿@page "/myrestaurants/{Id:int}/dishes/new"
+@attribute [Authorize(Roles = "Owner")]
 
 <h3>Добавяне на ново ястие / напитка</h3>
 

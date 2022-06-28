@@ -1,4 +1,6 @@
 ﻿@page "/myrestaurants/{Id:int}/staffmembers"
+@attribute [Authorize(Roles = "Owner")]
+
 <h3>Служители в @CurrentRestaurant.Name</h3>
 
 <input type="email" class="form-control" aria-describedby="emailHelp" placeholder="E-mail на служител" @bind=@InputField>

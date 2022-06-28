@@ -1,5 +1,5 @@
 ﻿@page "/newrestaurant"
-@attribute [Authorize]
+@attribute [Authorize(Roles = "Owner")]
 
 <h3>Създаване на заявка за нов ресторант</h3>
 

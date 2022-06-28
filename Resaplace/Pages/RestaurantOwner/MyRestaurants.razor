@@ -1,5 +1,5 @@
 ﻿@page "/myrestaurants"
-@attribute [Authorize]
+@attribute [Authorize(Roles = "Owner")]
 
 <h3>Моите ресторанти</h3>
 

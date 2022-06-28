@@ -1,5 +1,5 @@
 ﻿@page "/ownerapplications"
-@attribute [Authorize]
+@attribute [Authorize(Roles = "Admin")]
 
 <h3 class="d-inline-block">Заявки за собственик</h3>
 <a class="h4 float-end">Архив</a>

@@ -1,6 +1,6 @@
 ﻿@page "/myrestaurantapplications"
 @using Resaplace.Pages.Admin
-@attribute [Authorize]
+@attribute [Authorize(Roles = "Owner")]
 
 <h3>Моите заявки за създаване на ресторанти</h3>
 

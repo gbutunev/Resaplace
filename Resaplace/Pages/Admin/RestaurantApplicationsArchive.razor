@@ -1,6 +1,6 @@
 ﻿@page "/restaurantapplications/archive"
 @using Resaplace.Data.Models
-@attribute [Authorize]
+@attribute [Authorize(Roles = "Admin")]
 
 <h3>Архив - заявки за ресторанти</h3>
 
