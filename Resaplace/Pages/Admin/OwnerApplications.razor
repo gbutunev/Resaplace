@@ -2,7 +2,7 @@
 @attribute [Authorize(Roles = "Admin")]
 
 <h3 class="d-inline-block">Заявки за собственик</h3>
-<a class="h4 float-end">Архив</a>
+<a href="/ownerapplications/archive" class="h4 float-end">Архив</a>
 
 @foreach (var appl in PendingApplications)
 {
@@ -52,7 +52,6 @@
             </div>
         </div>
     </div>
-
 }
 
 @if (ShowAcceptPopup)

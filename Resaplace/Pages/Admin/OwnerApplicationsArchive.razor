@@ -1,0 +1,50 @@
+﻿@page "/ownerapplications/archive"
+@using Resaplace.Data.Models
+@attribute [Authorize(Roles = "Admin")]
+
+<h3>Заявки за собственик</h3>
+
+@foreach (var appl in OldApplications)
+{
+    <div class="bd-callout @(appl.ApplicationStatus == BasicStatus.Accepted ? "bd-callout-success" : "bd-callout-danger")">
+        <div class="row mx-1">
+            <div class="col">
+                <div class="row">
+                    Потребител: @appl.User.UserName
+                </div>
+                <div class="row">
+                    Име: @appl.FirstName
+                </div>
+                <div class="row">
+                    Презиме: @appl.MiddleName
+                </div>
+                <div class="row">
+                    Фамилия: @appl.LastName
+                </div>
+            </div>
+            <div class="col">
+                <div class="row">
+                    Адрес: @appl.Address
+                </div>
+                <div class="row">
+                    Град: @appl.City
+                </div>
+                <div class="row">
+                    Община: @appl.Municipality
+                </div>
+                <div class="row">
+                    Област: @appl.Region
+                </div>
+            </div>
+            <div class="col">
+                <div class="row">
+                    ЕИК: @appl.EIK
+                </div>
+                <div class="row">
+                    Фирма: @appl.CompanyName
+                </div>
+            </div>
+        </div>
+
+    </div>
+}

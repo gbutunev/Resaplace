@@ -31,14 +31,26 @@ namespace Resaplace.Services
             await dbContext.SaveChangesAsync();
         }
 
-        public async Task<List<OwnerApplication>> GetApplicationsByStatusAsync(BasicStatus status)
+        public async Task<List<OwnerApplication>> GetApplicationsByStatusAsync(BasicStatus status, bool getDeclinedAndAccepted = false)
         {
-            return await dbContext
-                .OwnerApplications
-                .Where(x => x.ApplicationStatus == status)
-                .OrderBy(x => x.CreatedOn)
-                .Include(x => x.User)
-                .ToListAsync();
+            if (getDeclinedAndAccepted)
+            {
+                return await dbContext
+                    .OwnerApplications
+                    .Where(x => x.ApplicationStatus == BasicStatus.Accepted || x.ApplicationStatus == BasicStatus.Declined)
+                    .OrderBy(x => x.CreatedOn)
+                    .Include(x => x.User)
+                    .ToListAsync();
+            }
+            else
+            {
+                return await dbContext
+                    .OwnerApplications
+                    .Where(x => x.ApplicationStatus == status)
+                    .OrderBy(x => x.CreatedOn)
+                    .Include(x => x.User)
+                    .ToListAsync();
+            }
         }
 
         public async Task UpdateApplicationStatusAsync(OwnerApplication currentApplication, BasicStatus status)
