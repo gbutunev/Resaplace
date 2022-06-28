@@ -1,25 +1,58 @@
 ﻿@page "/ownerapplications"
 @attribute [Authorize]
 
-<h3>Заявки за собственик</h3>
+<h3 class="d-inline-block">Заявки за собственик</h3>
+<a class="h4 float-end">Архив</a>
 
 @foreach (var appl in PendingApplications)
 {
-    <div>
-        <p>@appl.User.UserName</p>
-        <p>@appl.FirstName</p>
-        <p>@appl.MiddleName</p>
-        <p>@appl.LastName</p>
-        <p>@appl.Address</p>
-        <p>@appl.City</p>
-        <p>@appl.Municipality</p>
-        <p>@appl.Region</p>
-        <p>@appl.CompanyName</p>
-        <p>@appl.EIK</p>
-
-        <button @onclick=@(() => ShowAccept(appl))>Приеми</button>
-        <button @onclick=@(() => ShowDecline(appl))>Откажи</button>
+    <div class="card mb-2">
+        <div class="card-header">
+            Заявка на потребител @appl.User.UserName
+        </div>
+        <div class="card-body">
+            <div class="row mx-1">
+                <div class="col">
+                    <div class="row">
+                        Име: @appl.FirstName
+                    </div>
+                    <div class="row">
+                        Презиме: @appl.MiddleName
+                    </div>
+                    <div class="row">
+                        Фамилия: @appl.LastName
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="row">
+                        Адрес: @appl.Address
+                    </div>
+                    <div class="row">
+                        Град: @appl.City
+                    </div>
+                    <div class="row">
+                        Община: @appl.Municipality
+                    </div>
+                    <div class="row">
+                        Област: @appl.Region
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="row">
+                        ЕИК: @appl.EIK
+                    </div>
+                    <div class="row">
+                        Фирма: @appl.CompanyName
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12 clearfix">
+                <button @onclick=@(() => ShowAccept(appl)) class="btn btn-success float-end mx-1">Приеми</button>
+                <button @onclick=@(() => ShowDecline(appl)) class="btn btn-outline-danger float-end mx-1">Откажи</button>
+            </div>
+        </div>
     </div>
+
 }
 
 @if (ShowAcceptPopup)
@@ -49,7 +82,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Отказване на резервация</h5>
+                    <h5 class="modal-title">Отказване на заявка</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" @onclick="@CancelDecline"></button>
                 </div>
                 <div class="modal-body">
