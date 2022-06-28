@@ -1,10 +1,10 @@
 ﻿@using Resaplace.Data.Models
 
-<div class="card" style="width: 18rem;">
-    <img class="card-img-top" src="@mainImagePath" alt="@RestaurantApplication.Images.First().AltText">
+<div class="card w-100">
+    <img class="card-img-top card-img-custom" src="@mainImagePath" alt="@RestaurantApplication.Images.First().AltText">
     <div class="card-body">
         <h5 class="card-title">@RestaurantApplication.Name</h5>
-        <p class="card-text">@RestaurantApplication.Description</p>
+        <p class="card-text" style="word-break: break-word">@(RestaurantApplication.Description.Length <= 200 ? RestaurantApplication.Description : RestaurantApplication.Description.Substring(0,197)+"...")</p>
     </div>
     <ul class="list-group list-group-flush">
         <li class="list-group-item">@RestaurantApplication.Country</li>
@@ -14,31 +14,31 @@
         <li class="list-group-item">@RestaurantApplication.PhoneNumber</li>
         <li class="list-group-item">Маси: @RestaurantApplication.TotalTables</li>
         <li class="list-group-item">Места: @RestaurantApplication.TotalSeats</li>
-    </ul>
 
-    @switch (RestaurantApplication.ApplicationStatus)
-    {
-        case BasicStatus.Pending:
-            <div class="card-body">
-                <a href="/restaurantapplications/@RestaurantApplication.Id" class="card-link">Преглед</a>
-            </div>
-            break;
-        case BasicStatus.Accepted:
-            <div class="card-body">
-                <div class="alert alert-success">
-                    Одобрен
-                </div>
-            </div>
-            break;
-        case BasicStatus.Declined:
-            <div class="card-body">
-                <div class="alert alert-danger">
-                    Отказан
-                    <br>
-                    @RestaurantApplication.FeedbackMessage
-                </div>
-            </div>
-            break;
-    }
+        @switch (RestaurantApplication.ApplicationStatus)
+        {
+            case BasicStatus.Pending:
+                <li class="list-group-item">
+                    <a href="/restaurantapplications/@RestaurantApplication.Id" class="card-link">Преглед</a>
+                </li>
+                break;
+            case BasicStatus.Accepted:
+                <li class="list-group-item">
+                    <div class="alert alert-success">
+                        Одобрен
+                    </div>
+                </li>
+                break;
+            case BasicStatus.Declined:
+                <li class="list-group-item">
+                    <div class="alert alert-danger">
+                        Отказан
+                        <br>
+                        @RestaurantApplication.FeedbackMessage
+                    </div>
+                </li>
+                break;
+        }
+    </ul>
 </div>
 
