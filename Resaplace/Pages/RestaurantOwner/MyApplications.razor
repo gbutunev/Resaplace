@@ -2,26 +2,32 @@
 @using Resaplace.Pages.Admin
 @attribute [Authorize(Roles = "Owner")]
 
-<h3>Моите заявки за създаване на ресторанти</h3>
+<h3 class="mb-4">Моите заявки за създаване на ресторанти (@CurrentApplications.Count чакащи; @ArchivedApplications.Count приключени)</h3>
 
-<h4>Текущи заявки</h4>
+@if (CurrentApplications.Count != 0)
+{
+    <h4 class="text-center">Текущи заявки</h4>
 
-<div class="row row-cols-1 row-cols-md-5 g-4">
-    @foreach (var appl in CurrentApplications)
-    {
-        <div class="col">
-            <RestaurantApplicationComponent RestaurantApplication=@appl />
-        </div>
-    }
-</div>
+    <div class="row gy-4 mb-4">
+        @foreach (var appl in CurrentApplications)
+        {
+            <div class="col-sm-12 col-md-6 col-lg-4 col-xl-4 col-xxl-4 d-flex align-items-stretch">
+                <RestaurantApplicationComponent RestaurantApplication=@appl />
+            </div>
+        }
+    </div>
+}
 
-<h4>Архив на заявките</h4>
+@if (ArchivedApplications.Count != 0)
+{
+    <h4 class="text-center">Архив на заявките</h4>
 
-<div class="row row-cols-1 row-cols-md-5 g-4">
-    @foreach (var appl in ArchivedApplications)
-    {
-        <div class="col">
-            <RestaurantApplicationComponent RestaurantApplication=@appl />
-        </div>
-    }
-</div>
+    <div class="row gy-4 mb-4">
+        @foreach (var appl in ArchivedApplications)
+        {
+            <div class="col-sm-12 col-md-6 col-lg-4 col-xl-4 col-xxl-4 d-flex align-items-stretch">
+                <RestaurantApplicationComponent RestaurantApplication=@appl />
+            </div>
+        }
+    </div>
+}
