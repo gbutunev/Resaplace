@@ -16,7 +16,9 @@ namespace Resaplace.Pages.Admin
         private IToastService ToastService { get; set; }
         [Inject]
         private NavigationManager NavigationManager { get; set; }
-        #endregion
+        [Inject]
+        private OwnerService OwnerService { get; set; }
+       #endregion
 
         #region PARAMETERS
         [Parameter]
@@ -25,6 +27,7 @@ namespace Resaplace.Pages.Admin
 
         #region FUNCTIONAL PROPERTIES
         private RestaurantApplication CurrentApplication { get; set; }
+        private Owner CurrentOwner { get; set; }
         private string InitialMessage { get; set; } = "Зареждане...";
         private string FeedbackMessage { get; set; } = string.Empty;
         #endregion
@@ -39,6 +42,7 @@ namespace Resaplace.Pages.Admin
             CurrentApplication = await ResApplicationService.GetRestaurantApplicationByIdAsync(Id);
             if (CurrentApplication.ApplicationStatus != BasicStatus.Pending) NavigationManager.NavigateTo("/restaurantapplications");
             if (CurrentApplication == null) InitialMessage = "Заявката не съществува.";
+            CurrentOwner = await OwnerService.GetOwnerInfo(CurrentApplication.Owner);
         }
 
         private void ApproveRestaurantButtonClick() => ShowAcceptPopup = true;

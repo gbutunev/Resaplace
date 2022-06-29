@@ -21,6 +21,8 @@ namespace Resaplace.Pages.RestaurantOwner
         private UserManager<IdentityUser> UserManager { get; set; }
         [Inject]
         private IToastService ToastService { get; set; }
+        [Inject]
+        private NavigationManager NavManager { get; set; }
         private FormRestaurantApplication Model { get; set; } = new FormRestaurantApplication();
         private List<IBrowserFile> ModelFiles { get; set; } = new List<IBrowserFile>();
         private bool BoolClearInputFile { get; set; } = true;
@@ -62,6 +64,8 @@ namespace Resaplace.Pages.RestaurantOwner
 
 
             await ResApplicationService.InsertRestaurantApplicationAsync(restaurantApplication);
+            ToastService.ShowSuccess($"Заявката за {restaurantApplication.Name} е подадена успешно!");
+            NavManager.NavigateTo("/myrestaurantapplications");
         }
 
         private void LoadFiles(InputFileChangeEventArgs e)

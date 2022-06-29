@@ -1,72 +1,96 @@
 ﻿@page "/restaurantapplications/{Id:int}"
 @attribute [Authorize(Roles = "Admin")]
 
-<h3>Детайли</h3>
 @if (CurrentApplication == null)
 {
     <p>@InitialMessage</p>
 }
 else
 {
-    <h4>Ресторант @CurrentApplication.Name</h4>
+    <h3>Детайли за @CurrentApplication.Name</h3>
 
-    <div class="row row-cols-1 row-cols-md-3 g-4">
-        @foreach (var img in CurrentApplication.Images)
-        {
-            <div class="col">
-                <img class="m-4" style="height: 200px" src="/images/@img.ImagePath" alt="@img.AltText" />
-            </div>
-        }
-    </div>
-
-    <div class="row row-cols-1 row-cols-md-3 g-4">
-        <div class="col">
-            <div class="card" style="width: 18rem;">
-                <div class="card-header">
-                    Основна информация
+    <div class="border rounded mb-5 p-3">
+        <div class="row row-cols-1 row-cols-md-3 g-4">
+            @foreach (var image in CurrentApplication.Images)
+            {
+                <div class="col">
+                    <img src="/images/@image.ImagePath" class="card-img-top card-img-custom" alt="@image.AltText">
                 </div>
-                <div class="card-body">
-                    <h5 class="card-title">@CurrentApplication.Name</h5>
-                    <h6 class="card-title">Описание</h6>
-                    <p class="card-text">@CurrentApplication.Description</p>
-                </div>
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item">Брой маси: @CurrentApplication.TotalTables</li>
-                    <li class="list-group-item">Брой места: @CurrentApplication.TotalSeats</li>
-                </ul>
-            </div>
+            }
         </div>
+        <table class="table">
+            <tbody>
+                <tr>
+                    <th scope="row">Име</th>
+                    <td>@CurrentApplication.Name</td>
+                </tr>
+                <tr>
+                    <th scope="row">Описание</th>
+                    <td style="word-break: break-word">@CurrentApplication.Description</td>
+                </tr>
+                <tr>
+                    <th scope="row">Адрес</th>
+                    <td>@CurrentApplication.Country, @CurrentApplication.City, @CurrentApplication.StreetAddress</td>
+                </tr>
+                <tr>
+                    <th scope="row">Телефон за връзка</th>
+                    <td>@CurrentApplication.PhoneNumber</td>
+                </tr>
+                <tr>
+                    <th scope="row">Брой маси</th>
+                    <td>@CurrentApplication.TotalTables</td>
+                </tr>
+                <tr>
+                    <th scope="row">Брой места</th>
+                    <td>@CurrentApplication.TotalSeats</td>
+                </tr>
 
-        <div class="col">
-            <div class="card" style="width: 18rem;">
-                <div class="card-header">
-                    Локация
-                </div>
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item">@CurrentApplication.Country</li>
-                    <li class="list-group-item">@CurrentApplication.City</li>
-                    <li class="list-group-item">@CurrentApplication.StreetAddress</li>
-                </ul>
-            </div>
+                <tr>
+                    <th colspan="2" class="text-center">Информация за собственик</th>
+                </tr>
+
+                <tr>
+                    <th scope="row">Име</th>
+                    <td>@CurrentOwner.FirstName</td>
+                </tr>
+                <tr>
+                    <th scope="row">Презиме</th>
+                    <td>@CurrentOwner.MiddleName</td>
+                </tr>
+                <tr>
+                    <th scope="row">Фамилия</th>
+                    <td>@CurrentOwner.LastName</td>
+                </tr>
+                <tr>
+                    <th scope="row">Адрес</th>
+                    <td>@CurrentOwner.Address</td>
+                </tr>
+                <tr>
+                    <th scope="row">Град</th>
+                    <td>@CurrentOwner.City</td>
+                </tr>
+                <tr>
+                    <th scope="row">Община</th>
+                    <td>@CurrentOwner.Municipality</td>
+                </tr>
+                <tr>
+                    <th scope="row">Област</th>
+                    <td>@CurrentOwner.Region</td>
+                </tr>
+                <tr>
+                    <th scope="row">ЕИК</th>
+                    <td>@CurrentOwner.EIK</td>
+                </tr>
+                <tr>
+                    <th scope="row">Фирма</th>
+                    <td>@CurrentOwner.CompanyName</td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="d-grid gap-2 col-6 mx-auto">
+            <button type="button" class="btn btn-success" @onclick="@ApproveRestaurantButtonClick">Одобряване на заявката</button>
+            <button type="button" class="btn btn-danger" @onclick="@DenyRestaurantButtonClick">Отказване на заявката</button>
         </div>
-
-        <div class="col">
-            <div class="card" style="width: 18rem;">
-                <div class="card-header">
-                    Собственик
-                </div>
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item">@CurrentApplication.Owner.Email</li>
-                    <li class="list-group-item">Ресторант: @CurrentApplication.PhoneNumber</li>
-                </ul>
-            </div>
-        </div>
-    </div>
-
-
-    <div class="d-grid gap-2 col-6 mx-auto">
-        <button type="button" class="btn btn-success" @onclick="@ApproveRestaurantButtonClick">Одобряване на заявката</button>
-        <button type="button" class="btn btn-danger" @onclick="@DenyRestaurantButtonClick">Отказване на заявката</button>
     </div>
 
     @if (ShowAcceptPopup)
