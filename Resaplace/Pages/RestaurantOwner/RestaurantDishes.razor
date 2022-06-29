@@ -1,24 +1,28 @@
 ﻿@page "/myrestaurants/{Id:int}/dishes"
 @attribute [Authorize(Roles = "Owner")]
 
-<h3>Ресторант @CurrentRestaurant.Name - Ястия и напитки</h3>
+<h3 class="d-inline-block">@CurrentRestaurant.Name<br>Ястия и напитки</h3>
 
-<a href="/myrestaurants/@Id/dishes/new" class="btn btn-primary">Ново ястие/напитка</a>
+<a href="/myrestaurants/@Id/dishes/new" class="btn btn-primary float-end">Ново ястие/напитка</a>
 
-@foreach (var d in Dishes)
-{
-    <div class="card" style="width: 18rem;">
-        <img class="card-img-top" src="/images/@d.Image.ImagePath" alt="@d.Name">
-        <div class="card-body">
-            <h5 class="card-title">@d.Name</h5>
-            <p class="card-text">@d.Price</p>
-            <div class="btn-group" role="group" aria-label="Basic example">
-                <a href="/myrestaurants/@Id/dishes/@d.Id/edit" class="btn btn-secondary">Промяна</a>
-                <button type="button" class="btn btn-danger" @onclick="@(() => ShowDeletePopup(d))">Изтриване</button>
+<div class="row gy-4 mb-4">
+    @foreach (var d in Dishes)
+    {
+        <div class="col-sm-12 col-md-6 col-lg-6 col-xl-4 col-xxl-2 d-flex align-items-stretch">
+            <div class="card" style="width: 100%;">
+                <img class="card-img-top card-img-custom" src="/images/@d.Image.ImagePath" alt="@d.Name">
+                <div class="card-body">
+                    <h5 class="card-title">@d.Name</h5>
+                    <p class="card-text">@string.Format("{0:0.00}", d.Price) лв.</p>
+                    <div class="btn-group w-100" role="group" aria-label="Basic example">
+                        <a href="/myrestaurants/@Id/dishes/@d.Id/edit" class="btn btn-secondary">Промяна</a>
+                        <button type="button" class="btn btn-danger" @onclick="@(() => ShowDeletePopup(d))">Изтриване</button>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
-}
+    }
+</div>
 
 @if (DeletePopup)
 {
