@@ -37,8 +37,10 @@ namespace Resaplace.Pages.Client
 
         private Restaurant CurrentRestaurant { get; set; }
         private bool LoggedIn { get; set; }
+        private bool ConfirmPopup { get; set; }
         private Reservation NewRes { get; set; } = new Reservation();
         private Dictionary<Dish, int> AddedDishes { get; set; } = new Dictionary<Dish, int>();
+        private int DishCount = 0;
         private double TotalDishPrice
         {
             get
@@ -128,6 +130,26 @@ namespace Resaplace.Pages.Client
 
         private void ShowDishesComponent() => ShowDishMenu = true;
 
-        private void HideDishesComponent() => ShowDishMenu = false;
+        private void HideDishesComponent()
+        {
+            ShowDishMenu = false;
+            int sum = 0;
+            foreach (var d in AddedDishes)
+            {
+                sum += d.Value;
+            }
+            DishCount = sum;
+        }
+
+        private void HideConfirmation() { ConfirmPopup = false; }
+        private void ShowConfirmation()
+        {
+            if (SelectedHour == TimeOnly.MinValue)
+            {
+                ToastService.ShowWarning("Моля, изберете час!");
+                return;
+            }
+            ConfirmPopup = true;
+        }
     }
 }

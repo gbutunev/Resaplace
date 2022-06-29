@@ -2,77 +2,104 @@
 @using Resaplace.Pages.Components
 @if (CurrentRestaurant != null)
 {
-    <h3>@CurrentRestaurant.Name</h3>
+    <div class="border rounded mb-5 p-3">
+        <h3>@CurrentRestaurant.Name</h3>
+        <div>
+            <div class="row row-cols-1 row-cols-md-3 g-4">
+                @foreach (var image in CurrentRestaurant.Images)
+                {
+                    <div class="col">
+                        <img class="card-img-top card-img-custom" src="/images/@image.ImagePath" alt="@image.AltText" />
+                    </div>
+                }
+            </div>
+            <div class="card mt-3">
+                <div class="card-body" style="word-break: break-word;">
+                    @CurrentRestaurant.Description
+                </div>
+                <div class="card-body">
+                    За резервации с повече хора, моля, обадете се на телефона на ресторанта: @CurrentRestaurant.PhoneNumber
+                </div>
+            </div>
 
-    <div class="container">
-
-        <div class="row">
-            @foreach (var image in CurrentRestaurant.Images)
+            @if (!LoggedIn)
             {
+                <div class="card mt-2">
+                    <div class="card-body">
+                        За да направите резервация, <a href="/identity/account/login">влезте в профила си</a>.
+                    </div>
+                </div>
+            }
+            else
+            {
+                <div class="row row-cols-1 row-cols-md-3 g-4 mt-2">
 
-                <div class="col-sm-4">
-                    <img height="220" src="/images/@image.ImagePath" alt="@image.AltText" />
+                    <div class="col">
+                        <label for="dateselector d-inline-block">Дата:</label>
+                        <input class="form-control d-lg-inline-block" id="dateselector" type="date" min="@MinDate" max="@MaxDate" @onchange="OnDateChange" disabled="@DateDisabled" />
+
+                        @if (ShowPeopleNum)
+                        {
+                            <label for="pplNum">Брой хора:</label>
+                            <select name="pplNum" id="pplNum" @onchange="OnPplNumChange" disabled="@PplNumDisabled" class="form-control">
+                                <option value="-1">-</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="6">6</option>
+                                <option value="7">7</option>
+                                <option value="8">8</option>
+                            </select>
+                        }
+                    </div>
+
+                    @if (ShowTime)
+                    {
+                        <div class="col">
+                            <div class="card mt-3">
+                                @if (AvailableHours == null)
+                                {
+                                    <div class="card-body">
+                                        Зареждане на часовете...
+                                    </div>
+                                }
+                                else if (AvailableHours.Count == 0)
+                                {
+                                    <div class="card-body">
+                                        Няма свободни места за избраната дата и брой души.
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="card-body">
+                                        @foreach (var t in AvailableHours)
+                                        {
+                                            <label class="flex-label mx-2">
+                                                <input type="radio" class="form-check-input" id="@t" name="resHour" value="@t" @onchange="@(() => ChangeSelectedHour(t))">
+                                                <span>@t</span>
+                                            </label>
+                                        }
+                                    </div>
+                                }
+                            </div>
+                        </div>
+
+                        <div class="col">
+                            <button class="btn btn-primary btn btn-primary w-100 h-100" @onclick="@ShowDishesComponent">Добави ястия <span class="badge bg-success">@DishCount продукт/а</span></button>
+                        </div>
+
+                        <button class="btn btn-success w-40 mx-auto" @onclick="@ShowConfirmation">Направи резервация</button>
+                    }
+
                 </div>
             }
         </div>
-        <div>
-            <p>
-                @CurrentRestaurant.Description
-            </p>
-        </div>
-
-        @if (!LoggedIn)
-        {
-            <p>За да направите резервация, <a href="/identity/account/login">влезте в профила си</a>.</p>
-        }
-        else
-        {
-            <label for="dateselector">Дата:</label>
-            <input id="dateselector" type="date" min="@MinDate" max="@MaxDate" @onchange="OnDateChange" disabled="@DateDisabled" />
-
-            @if (ShowPeopleNum)
-            {
-                <label for="pplNum">Брой хора:</label>
-                <select name="pplNum" id="pplNum" @onchange="OnPplNumChange" disabled="@PplNumDisabled">
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                    <option value="6">6</option>
-                    <option value="7">7</option>
-                    <option value="8">8</option>
-                </select>
-                <p>За резервации с повече хора, моля обадете се на телефона на ресторанта: @CurrentRestaurant.PhoneNumber</p>
-            }
-
-            @if (ShowTime)
-            {
-                @if (AvailableHours == null)
-                {
-                    <p>Зареждане на часовете...</p>
-                }
-                else if (AvailableHours.Count == 0)
-                {
-                    <p>Няма свободни места за избраната дата и брой души.</p>
-                }
-                else
-                {
-                    @foreach (var t in AvailableHours)
-                    {
-                        <input class="form-check-input" type="radio" id="@t" name="resHour" value="@t" @onchange="@(() => ChangeSelectedHour(t))">
-                        <label class="form-check-label" for="@t">@t</label>
-                        <br>
-                    }
-                    <button class="btn btn-primary" @onclick="@ShowDishesComponent">Добави ястия</button>
-                    <button class="btn btn-primary" @onclick="@CreateReservation">Направи резервация</button>
-                }
-            }
-        }
     </div>
 }
 
-@if (AddedDishes.Count != 0)
+@*@if (AddedDishes.Count != 0)
 {
     <div class="card" style="width: 18rem;">
         <div class="card-header">
@@ -88,13 +115,55 @@
             Общо към сметката: @TotalDishPrice
         </div>
     </div>
-}
+}*@
 
 @if (ShowDishMenu)
 {
     <DishesModal RestaurantId=Id Reservation=NewRes AddedDishes=AddedDishes CloseModal=HideDishesComponent />
 }
 
+@if (ConfirmPopup)
+{
+    <div class="modal" tabindex="-1" role="dialog" style="display: block">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Потвърждаване на резервация</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" @onclick="@HideConfirmation"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Резервация в @CurrentRestaurant.Name на @SelectedDate.ToString("dd MMM yyyy") в @SelectedHour за @SelectedPplNum души.</p>
+                    @if (AddedDishes.Count != 0)
+                    {
+                        <p>Поръчка към резервацията:</p>
+
+                        <ul class="list-group w-100">
+                            @{
+                                double sum = 0;
+                            }
+                            @foreach (var d in AddedDishes)
+                            {
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    @d.Key.Name
+                                    <span class="badge bg-primary badge-pill">@d.Value</span>
+                                </li>
+
+                                sum += d.Value * d.Key.Price;
+                            }
+                        </ul>
+                        <p class="mt-3">Обща сума: @(string.Format("{0:0.00}", sum)) лв.</p>
+                        <p class="text-muted">Сумата ще бъде добавена към сметката в ресторанта</p>
+                    }
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" @onclick="@CreateReservation">Резервирай</button>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
 @code {
     TimeOnly timeEnd = new TimeOnly(21, 0);
 }
+

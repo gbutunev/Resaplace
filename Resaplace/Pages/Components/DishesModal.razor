@@ -4,18 +4,20 @@
             <div class="modal-header">
                 <h5 class="modal-title">Добавяне на ястия и напитки</h5>
                 @*                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                    </button>*@
+                <span aria-hidden="true">&times;</span>
+                </button>*@
             </div>
             <div class="modal-body">
-                @foreach (var d in AllDishes)
-                {
-                    <div class="card" style="width: 18rem;">
-                        <img class="card-img-top" src="/images/@d.Image.ImagePath" alt="@d.Name">
-                        <div class="card-body">
-                            <h5 class="card-title">@d.Name</h5>
-                            <p class="card-text">@d.Price</p>
-                            @*<div class="btn-group" role="group">
+                <div class="row gy-4 mb-4">
+                    @foreach (var d in AllDishes)
+                    {
+                        <div class="col-sm-12 col-md-6 col-lg-6 col-xl-4 col-xxl-4 d-flex align-items-stretch">
+                            <div class="card w-100">
+                                <img class="card-img-top card-img-custom" src="/images/@d.Image.ImagePath" alt="@d.Name">
+                                <div class="card-body">
+                                    <h5 class="card-title">@d.Name</h5>
+                                    <p class="card-text">@d.Price</p>
+                                    @*<div class="btn-group" role="group">
                                 <div class="input-group mb-3">
                                 <div class="input-group-prepend">
                                 <button class="btn btn-outline-secondary" type="button">-</button>
@@ -26,14 +28,16 @@
                                 </div>
                                 </div>
                                 </div>*@
-                            <div class="btn-group" role="group" aria-label="Basic example">
-                                <button type="button" class="btn btn-primary" @onclick="@(() => DecreaseDishCount(d))"><span class="oi oi-minus"></span></button>
-                                <button type="button" class="btn btn-outline-primary" disabled>@(AddedDishes.ContainsKey(d) ? AddedDishes[d] : 0)</button>
-                                <button type="button" class="btn btn-primary" @onclick="@(() => IncreaseDishCount(d))"><span class="oi oi-plus"></span></button>
+                                    <div class="btn-group" role="group" aria-label="Basic example">
+                                        <button type="button" class="btn btn-primary" @onclick="@(() => DecreaseDishCount(d))"><span class="oi oi-minus"></span></button>
+                                        <button type="button" class="btn btn-outline-primary" disabled>@(AddedDishes.ContainsKey(d) ? AddedDishes[d] : 0)</button>
+                                        <button type="button" class="btn btn-primary" @onclick="@(() => IncreaseDishCount(d))"><span class="oi oi-plus"></span></button>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                }
+                    }
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-success" data-dismiss="modal" @onclick="CloseModal">Запази</button>
