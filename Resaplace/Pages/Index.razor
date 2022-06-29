@@ -1,23 +1,30 @@
 ﻿@page "/"
 <PageTitle>Resaplace</PageTitle>
 
-<h1>Resaplace</h1>
-<h2>Направи резервация бързо и лесно!</h2>
+<h2 class="align-content-end">Направи резервация бързо и лесно!</h2>
 
-@foreach (var r in Restaurants)
-{
-    <div class="card" style="width: 18rem;">
-        <img class="card-img-top" src="/images/@r.Images.First().ImagePath" alt="@r.Images.First().AltText">
-        <div class="card-body">
-            <h5 class="card-title">@r.Name</h5>
-            <p class="card-text">@r.Description</p>
+<div class="row gy-4 mb-4">
+    @foreach (var r in Restaurants)
+    {
+        <div class="col-sm-12 col-md-6 col-lg-6 col-xl-4 col-xxl-3 d-flex align-items-stretch">
+            <div class="card w-100" style="width: 18rem;">
+                <a href="/@r.Id" class="card-link">
+                    <img class="card-img-top card-img-custom" src="/images/@r.Images.First().ImagePath" alt="@r.Images.First().AltText">
+                </a>
+                <div class="card-body">
+                    <h5 class="card-title">@r.Name</h5>
+                    <p class="card-text" style="word-break: break-word;">@(r.Description.Length <= 200 ? r.Description : r.Description.Substring(0,197)+"...")</p>
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">@r.City</li>
+                    <li class="list-group-item">@r.StreetAddress</li>
+                    <li class="list-group-item">
+                        <a href="/@r.Id" class="card-link">
+                            Направи резервация
+                        </a>
+                    </li>
+                </ul>
+            </div>
         </div>
-        <ul class="list-group list-group-flush">
-            <li class="list-group-item">@r.City</li>
-            <li class="list-group-item">@r.StreetAddress</li>
-        </ul>
-        <div class="card-body">
-            <a href="/@r.Id" class="card-link">Направи резервация</a>
-        </div>
-    </div>
-}
+    }
+</div>
