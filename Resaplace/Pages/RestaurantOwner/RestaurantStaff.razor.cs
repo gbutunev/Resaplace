@@ -48,11 +48,20 @@ namespace Resaplace.Pages.RestaurantOwner
             StaffMembers = await StaffService.GetStaffMembersByRestaurantAsync(CurrentRestaurant);
         }
 
-        private void ShowAddStaffModal() => AddStaffPopup = true;
+        private void ShowAddStaffModal()
+        {
+            if (string.IsNullOrWhiteSpace(InputField))
+            {
+                ToastService.ShowError("Въведете имейл!");
+                return;
+            }
+            AddStaffPopup = true;
+        }
         private void HideStaffPopup() => AddStaffPopup = false;
         private async Task AddStaffMember()
         {
             InputField = InputField.Trim();
+
             IdentityUser user = await UserManager.FindByNameAsync(InputField);
 
             if (user == null)

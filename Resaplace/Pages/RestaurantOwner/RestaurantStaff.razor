@@ -3,8 +3,10 @@
 
 <h3>Служители в @CurrentRestaurant.Name</h3>
 
-<input type="email" class="form-control" aria-describedby="emailHelp" placeholder="E-mail на служител" @bind=@InputField>
-<button class="btn btn-primary" @onclick=@ShowAddStaffModal>Добави</button>
+<div class="input-group mb-3">
+    <input type="email" class="form-control" aria-describedby="emailHelp" placeholder="E-mail на служител" @bind=@InputField>
+    <button class="btn btn-outline-success" @onclick=@ShowAddStaffModal>Добави</button>
+</div>
 
 <table class="table">
     <thead>
