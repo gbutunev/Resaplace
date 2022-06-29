@@ -5,25 +5,48 @@
 
 @foreach (var res in Reservations)
 {
-    <div class="container border rounded mb-5 p-3">
+    <div class="border rounded mb-5 p-3">
         <h4>@res.Restaurant.Name</h4>
-        <h5>@res.Restaurant.City, @res.Restaurant.StreetAddress</h5>
+        <h5>Адрес: @res.Restaurant.City, @res.Restaurant.StreetAddress</h5>
         <div>
-            <p>@res.DateTime</p>
-            <p>@res.PeopleNumber</p>
+            <p>Час и дата: @res.DateTime</p>
+            <p>Брой хора: @res.PeopleNumber</p>
+            <p>Телефон за въпроси: @res.Restaurant.PhoneNumber</p>
         </div>
         @if (res.ReservationDishes.Count != 0)
         {
+
             <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Продукт</th>
+                        <th scope="col">Ед. цена</th>
+                        <th scope="col">Брой</th>
+                        <th scope="col">Цена</th>
+                    </tr>
+                </thead>
                 <tbody>
+                    @{
+                        double sum = 0;
+                    }
                     @foreach (var d in res.ReservationDishes)
                     {
+
                         <tr>
                             <th scope="row">@d.Dish.Name</th>
-                            <td>x@(d.Amount)</td>
+                            <td>@(string.Format("{0:0.00}", d.Dish.Price)) лв.</td>
+                            <td>@(d.Amount)x</td>
+                            <td>@(string.Format("{0:0.00}", d.Dish.Price * d.Amount)) лв.</td>
                         </tr>
+                        sum += d.Dish.Price * d.Amount;
                     }
                 </tbody>
+                <tfoot>
+                    <tr>
+                        <td class="text-end text-muted" colspan="3">(Сумата от поръчаните продукти ще бъде добавена към крайната Ви сметка в ресторанта)</td>
+                        <th scope="row">Тотал: @(string.Format("{0:0.00}", sum)) лв.</th>
+                    </tr>
+                </tfoot>
             </table>
         }
 
