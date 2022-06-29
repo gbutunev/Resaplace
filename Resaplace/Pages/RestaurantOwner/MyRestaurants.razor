@@ -5,12 +5,12 @@
 
 @foreach (var res in Restaurants)
 {
-    <div class="container border rounded mb-5 p-3">
+    <div class="border rounded mb-5 p-3">
         <div class="row row-cols-1 row-cols-md-3 g-4">
             @foreach (var image in res.Images)
             {
                 <div class="col">
-                    <img src="/images/@image.ImagePath" class="card-img-top" alt="@image.AltText">
+                    <img src="/images/@image.ImagePath" class="card-img-top card-img-custom" alt="@image.AltText">
                 </div>
             }
         </div>
