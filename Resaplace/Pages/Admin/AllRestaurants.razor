@@ -5,12 +5,12 @@
 
 @foreach (var res in Restaurants)
 {
-    <div class="container border rounded mb-5 p-3">
+    <div class="border rounded mb-5 p-3">
         <div class="row row-cols-1 row-cols-md-3 g-4">
             @foreach (var image in res.Images)
             {
                 <div class="col">
-                    <img src="/images/@image.ImagePath" class="card-img-top" alt="@image.AltText">
+                    <img src="/images/@image.ImagePath" class="card-img-top card-img-custom" alt="@image.AltText">
                 </div>
             }
         </div>
@@ -42,7 +42,7 @@
                 </tr>
                 <tr>
                     <th scope="row">Собственик</th>
-                    <td>@res.Owner.Email</td>
+                    <td><button class="btn btn-link p-0" @onclick="(()=>ShowOwnerInfo(res.Owner))">@res.Owner.Email</button></td>
                 </tr>
             </tbody>
         </table>
@@ -66,6 +66,65 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" @onclick="@CancelDeletion">Не</button>
                     <button type="button" class="btn btn-success" @onclick="@AcceptDeletion">Да</button>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@if (ShowOwnerInfoPopup)
+{
+    <div class="modal" tabindex="-1" role="dialog" style="display: block">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Информация за бизнес партньор</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" @onclick="@HideOwnerInfo"></button>
+                </div>
+                <div class="modal-body">
+                    <table class="table table-hover">
+                        <tbody>
+                            <tr>
+                                <td>Име</td>
+                                <td>@CurrentOwner.FirstName</td>
+                            </tr>
+                            <tr>
+                                <td>Презиме</td>
+                                <td>@CurrentOwner.MiddleName</td>
+                            </tr>
+                            <tr>
+                                <td>Фамилия</td>
+                                <td>@CurrentOwner.LastName</td>
+                            </tr>
+                            <tr>
+                                <td>Адрес</td>
+                                <td>@CurrentOwner.Address</td>
+                            </tr>
+                            <tr>
+                                <td>Град</td>
+                                <td>@CurrentOwner.City</td>
+                            </tr>
+                            <tr>
+                                <td>Община</td>
+                                <td>@CurrentOwner.Municipality</td>
+                            </tr>
+                            <tr>
+                                <td>Област</td>
+                                <td>@CurrentOwner.Region</td>
+                            </tr>
+                            <tr>
+                                <td>ЕИК</td>
+                                <td>@CurrentOwner.EIK</td>
+                            </tr>
+                            <tr>
+                                <td>Име на фирмата</td>
+                                <td>@CurrentOwner.CompanyName</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-success" data-bs-dismiss="modal" @onclick="@HideOwnerInfo">Ок</button>
                 </div>
             </div>
         </div>

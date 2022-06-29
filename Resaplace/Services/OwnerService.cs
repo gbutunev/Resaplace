@@ -40,5 +40,12 @@ namespace Resaplace.Services
 
             await userManager.AddToRoleAsync(newOwner.User, "Owner");
         }
+
+        public async Task<Owner> GetOwnerInfo(IdentityUser user)
+        {
+            return await dbContext
+                .Owners
+                .FirstOrDefaultAsync(x => x.User == user);
+        }
     }
 }
