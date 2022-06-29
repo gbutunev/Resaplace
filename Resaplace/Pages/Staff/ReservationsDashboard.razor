@@ -1,28 +1,90 @@
 ﻿@page "/dashboard/{Id:int}"
+@using Resaplace.Data.Models
 @attribute [Authorize(Roles = "Staff")]
 
-<h3>Управление на резервации</h3>
-<h4>Ресторант @CurrentRestaurant.Name</h4>
+<h3>Управление на резервации @DateTime.Now.ToString("dd MMM yyyy")</h3>
+<h4 class="mb-5">Ресторант @CurrentRestaurant.Name</h4>
 
-@foreach (var r in ReservationsToday)
+<h4 class="mb-4">Чакащи резервации</h4>
+@if (PendingReservations.Count == 0)
 {
-    <div>
-        data - @r.DateTime.Hour:@r.DateTime.Minute
-        <br>
-        message - @r.Message
-        <br>
-        hora - @r.PeopleNumber
-        <br>
-        mail - @r.User.Email
-        <br>
-        user - @r.User.UserName
-        <br>
-        qdeneta - @r.ReservationDishes.Count
-        <br>
-        status - @r.ReservationStatus
-        <br>
-        <button @onclick=@(() => ShowAccept(r))>Priemi</button>
-        <button @onclick=@(() => ShowDecline(r))>otkaji</button>
+    <p>Няма чакащи резервации.</p>
+}
+else
+{
+    @foreach (var r in PendingReservations)
+    {
+        <div class="input-group mb-3">
+            <div class="form-control border-1">
+                <div class="row mx-1">
+                    <div class="col">
+                        <div class="row">
+                            Потребител: @r.User.UserName
+                        </div>
+                        <div class="row">
+                            Имейл: @r.User.UserName
+                        </div>
+                        <div class="row" style="word-break: break-word;">
+                            Съобщение: @r.Message
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="row">
+                            Час: @(r.DateTime.Hour > 9 ? r.DateTime.Hour : "0" + r.DateTime.Hour):@(r.DateTime.Minute > 9 ? r.DateTime.Minute : "0"+r.DateTime.Minute)
+                        </div>
+                        <div class="row">
+                            Брой гости: @r.PeopleNumber
+                        </div>
+                    </div>
+                    <div class="col">
+                        @foreach (var dish in r.ReservationDishes)
+                        {
+                            <div class="row">
+                                @(dish.Amount)x @dish.Dish.Name
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+            <button class="btn btn-outline-danger" type="button" @onclick=@(() => ShowDecline(r))>Откажи</button>
+            <button class="btn btn-outline-success" type="button" @onclick=@(() => ShowAccept(r))>Приеми</button>
+        </div>
+    }
+}
+
+<h4 class="mb-4">Минали резервации</h4>
+@foreach (var r in PastReservations)
+{
+    <div class="bd-callout @(r.ReservationStatus == BasicStatus.Accepted ? "bd-callout-success" : "bd-callout-danger")">
+        <div class="row mx-1">
+            <div class="col">
+                <div class="row">
+                    Потребител: @r.User.UserName
+                </div>
+                <div class="row">
+                    Имейл: @r.User.UserName
+                </div>
+                <div class="row" style="word-break: break-word;">
+                    Съобщение: @r.Message
+                </div>
+            </div>
+            <div class="col">
+                <div class="row">
+                    Час: @(r.DateTime.Hour > 9 ? r.DateTime.Hour : "0" + r.DateTime.Hour):@(r.DateTime.Minute > 9 ? r.DateTime.Minute : "0"+r.DateTime.Minute)
+                </div>
+                <div class="row">
+                    Брой гости: @r.PeopleNumber
+                </div>
+            </div>
+            <div class="col">
+                @foreach (var dish in r.ReservationDishes)
+                {
+                    <div class="row">
+                        @(dish.Amount)x @dish.Dish.Name
+                    </div>
+                }
+            </div>
+        </div>
     </div>
 }
 

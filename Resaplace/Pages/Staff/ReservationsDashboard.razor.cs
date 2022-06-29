@@ -27,6 +27,8 @@ namespace Resaplace.Pages.Staff
 
         private Restaurant CurrentRestaurant { get; set; } = new Restaurant();
         private List<Reservation> ReservationsToday { get; set; } = new List<Reservation>();
+        private List<Reservation> PendingReservations { get; set; } = new List<Reservation>();
+        private List<Reservation> PastReservations { get; set; } = new List<Reservation>();
         private Reservation SelectedReservation { get; set; } = null;
         private bool ShowAcceptPopup { get; set; }
         private bool ShowDeclinePopup { get; set; }
@@ -40,9 +42,16 @@ namespace Resaplace.Pages.Staff
 
             bool userIsStaff = await StaffService.ContainsStaffMember(idUser, CurrentRestaurant);
             if (!userIsStaff) NavManager.NavigateTo("/");
+            await UpdateLists();
+        }
 
+        private async Task UpdateLists()
+        {
             ReservationsToday = await ReservationService
-                .GetReservationsByRestaurantAndDate(CurrentRestaurant, DateTime.Today);
+                            .GetReservationsByRestaurantAndDate(CurrentRestaurant, DateTime.Today);
+
+            PendingReservations = ReservationsToday.Where(x => x.ReservationStatus == BasicStatus.Pending).ToList();
+            PastReservations = ReservationsToday.Where(x => x.ReservationStatus != BasicStatus.Pending).ToList();
         }
 
         private void ShowAccept(Reservation r)
@@ -74,6 +83,7 @@ namespace Resaplace.Pages.Staff
             await ReservationService.SetReservationStatus(SelectedReservation, BasicStatus.Accepted);
             SelectedReservation = null;
             ShowAcceptPopup = false;
+            await UpdateLists();
             StateHasChanged();
         }
 
@@ -82,6 +92,7 @@ namespace Resaplace.Pages.Staff
             await ReservationService.SetReservationStatus(SelectedReservation, BasicStatus.Declined);
             SelectedReservation = null;
             ShowDeclinePopup = false;
+            await UpdateLists();
             StateHasChanged();
         }
     }
