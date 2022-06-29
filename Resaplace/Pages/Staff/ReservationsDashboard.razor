@@ -2,7 +2,7 @@
 @using Resaplace.Data.Models
 @attribute [Authorize(Roles = "Staff")]
 
-<h3>Управление на резервации @DateTime.Now.ToString("dd MMM yyyy")</h3>
+<h3>Управление на резервации - @DateTime.Now.ToString("dd MMM yyyy")</h3>
 <h4 class="mb-5">Ресторант @CurrentRestaurant.Name</h4>
 
 <h4 class="mb-4">Чакащи резервации</h4>
