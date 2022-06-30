@@ -26,7 +26,7 @@ namespace Resaplace.Services
                 DateTime resBegin = new(selectedDate.Year, selectedDate.Month, selectedDate.Day, timeStart.Hour, timeStart.Minute, 0);
 
                 #region Check reservations by number of people before required time
-                var timeframePeople1 = resBegin.Subtract(TimeSpan.FromMinutes(30));
+                var timeframePeople1 = resBegin.Subtract(TimeSpan.FromMinutes(90));
                 int amountPeople1 = dbContext
                     .Reservations
                     .Where(x => x.Restaurant.Id == restaurantId)
@@ -34,7 +34,7 @@ namespace Resaplace.Services
                     .Where(x => x.DateTime == timeframePeople1)
                     .Sum(x => x.PeopleNumber);
 
-                var timeframePeople2 = resBegin.Subtract(TimeSpan.FromMinutes(90));
+                var timeframePeople2 = resBegin.Subtract(TimeSpan.FromMinutes(150));
                 int amountPeople2 = dbContext
                     .Reservations
                     .Where(x => x.Restaurant.Id == restaurantId)
@@ -46,9 +46,9 @@ namespace Resaplace.Services
                 #region Check reservations by number of people after required time
                 DateTime timeframePeople3;
                 if (numberOfPeople <= 4)
-                    timeframePeople3 = resBegin.Add(TimeSpan.FromMinutes(30));
-                else
                     timeframePeople3 = resBegin.Add(TimeSpan.FromMinutes(90));
+                else
+                    timeframePeople3 = resBegin.Add(TimeSpan.FromMinutes(150));
                 int amountPeople3 = dbContext
                     .Reservations
                     .Where(x => x.Restaurant.Id == restaurantId)
@@ -57,7 +57,7 @@ namespace Resaplace.Services
                 #endregion
 
                 #region Check reservations by table numbers before required time
-                var timeframeTables1 = resBegin.Subtract(TimeSpan.FromMinutes(30));
+                var timeframeTables1 = resBegin.Subtract(TimeSpan.FromMinutes(90));
                 int amountTables1 = dbContext
                     .Reservations
                     .Where(x => x.Restaurant.Id == restaurantId)
@@ -65,7 +65,7 @@ namespace Resaplace.Services
                     .Where(x => x.DateTime == timeframeTables1)
                     .Count();
 
-                var timeframeTables2 = resBegin.Subtract(TimeSpan.FromMinutes(90));
+                var timeframeTables2 = resBegin.Subtract(TimeSpan.FromMinutes(150));
                 int amountTables2 = dbContext
                     .Reservations
                     .Where(x => x.Restaurant.Id == restaurantId)
@@ -77,9 +77,9 @@ namespace Resaplace.Services
                 #region Check reservations by table numbers after required time
                 DateTime timeframeTables3;
                 if (numberOfPeople <= 4)
-                    timeframeTables3 = resBegin.Add(TimeSpan.FromMinutes(30));
-                else
                     timeframeTables3 = resBegin.Add(TimeSpan.FromMinutes(90));
+                else
+                    timeframeTables3 = resBegin.Add(TimeSpan.FromMinutes(150));
                 int amountTables3 = dbContext
                     .Reservations
                     .Where(x => x.Restaurant.Id == restaurantId)
