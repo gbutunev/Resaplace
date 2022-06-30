@@ -58,9 +58,13 @@
 }
 else if (pageStatus == BasicStatus.Pending)
 {
-    <p>Вашата заявка все още не е обработена.</p>
+    <div class="alert alert-info">
+        Вашата заявка все още не е обработена.
+    </div>
 }
 else
 {
-    <p>Вашият акаунт вече е с права на собственик.</p>
+    <div class="alert alert-success">
+        Вашият акаунт вече е с права на собственик.
+    </div>
 }
